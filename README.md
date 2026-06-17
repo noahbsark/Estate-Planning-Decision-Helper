@@ -6,7 +6,7 @@ A polished, mobile-first static website that helps U.S. adults and families unde
 
 ## Project overview
 
-This site is a client-side decision-support experience for estate-planning education. It asks one question at a time, explains the logic in plain English, and generates a print-friendly and downloadable PDF summary users can bring to an attorney.
+This site is a client-side decision-support experience for estate-planning education. It asks one question at a time, explains the logic in plain English, and generates a print-friendly summary users can bring to an attorney.
 
 The site uses:
 
@@ -17,7 +17,7 @@ The site uses:
 - No database
 - No tracking
 - No personal data storage
-- Client-side quiz and PDF generation only
+- Client-side quiz logic only
 
 ## File structure
 
@@ -25,7 +25,7 @@ The site uses:
 estate-planning-decision-helper/
 ├── index.html      # Main static page and semantic content sections
 ├── styles.css      # Visual system, responsive layout, accessibility states, print styles
-├── script.js       # Dynamic quiz rendering, scoring, result generation, PDF export, and interactions
+├── script.js       # Dynamic quiz rendering, scoring, result generation, and interactions
 ├── README.md       # Setup, deployment, and customization instructions
 └── .nojekyll       # Keeps GitHub Pages from running Jekyll processing
 ```
@@ -36,7 +36,7 @@ No build step is required.
 
 1. Download or clone this repository.
 2. Open `index.html` directly in a browser.
-3. Complete the quiz and verify the result summary, PDF download, and print action.
+3. Complete the quiz and verify the result summary.
 
 For a local server, you can also run:
 
@@ -143,16 +143,6 @@ Result explanations are defined in `outcomeContent` in `script.js`. Each outcome
 - Questions to ask an attorney
 - Next steps
 
-### PDF summary
-
-The **Download PDF summary** button generates a high-quality vector/text PDF directly in the browser using vanilla JavaScript. It does not send answers to a server and does not require a PDF library or CDN.
-
-To customize PDF text or layout, edit these functions in `script.js`:
-
-- `downloadPdfSummary()`
-- `createSummaryPdf()`
-- `createPdfWriter()`
-
 ### CTA links
 
 The consultation CTA is rendered in `renderResult()` in `script.js`.
@@ -181,7 +171,7 @@ Recommended language to preserve:
 ## Suggested future improvements
 
 - Add state-specific educational pages reviewed by licensed counsel.
-- Add optional firm branding to the browser-generated PDF summary.
+- Add optional downloadable PDF styling for printed summaries.
 - Add a firm-branded consultation form link.
 - Add Spanish-language content.
 - Add more detailed educational content about powers of attorney, health care directives, beneficiary designations, and trust funding.
@@ -192,7 +182,7 @@ Recommended language to preserve:
 
 - Opens locally with `index.html`
 - Quiz works end-to-end
-- Back, next, restart, validation, PDF download, and print actions work
+- Back, next, restart, validation, and print actions work
 - All four result types are reachable through different answer paths
 - Responsive layout is designed for mobile, tablet, and desktop
 - No backend, database, tracking, or data storage

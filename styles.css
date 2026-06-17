@@ -1597,6 +1597,60 @@ body.result-open .consultation-cta .btn {
   }
 }
 
+
+/* Final comparison-card readability pass: prevent label/value overlap on narrow cards. */
+@media screen {
+  .comparison-card {
+    gap: var(--space-4);
+  }
+
+  .comparison-card dl {
+    gap: 0;
+  }
+
+  .comparison-card dl div {
+    grid-template-columns: 1fr !important;
+    align-items: start;
+    gap: 0.45rem;
+    padding: 0.78rem 0 0.85rem;
+  }
+
+  .comparison-card dt {
+    max-width: 100%;
+    line-height: 1.28;
+  }
+
+  .comparison-card dd {
+    justify-content: flex-start;
+    width: fit-content;
+    max-width: 100%;
+    min-width: 0;
+    padding: 0.34rem 0.62rem;
+    white-space: normal;
+    text-align: left;
+  }
+
+  .comparison-card dl div:last-child dd {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  @media (min-width: 980px) {
+    .comparison-grid {
+      gap: var(--space-4);
+    }
+
+    .comparison-card {
+      padding: clamp(1.25rem, 2vw, 1.65rem);
+    }
+
+    .comparison-card h3 {
+      font-size: clamp(1.14rem, 1.35vw, 1.38rem);
+      line-height: 1.08;
+    }
+  }
+}
+
 @media print {
   :root {
     --color-navy-950: #111111;
@@ -1655,5 +1709,45 @@ body.result-open .consultation-cta .btn {
 
   a[href]::after {
     content: "";
+  }
+}
+
+/* Premium comparison layout pass: give comparison cards enough room to avoid cramped labels and badge collisions. */
+@media screen and (min-width: 980px) {
+  .comparison-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    max-width: 980px;
+    margin-inline: auto;
+    gap: var(--space-6);
+  }
+
+  .comparison-card {
+    padding: clamp(1.6rem, 2.6vw, 2rem) !important;
+  }
+
+  .comparison-card h3 {
+    max-width: 15ch;
+    font-size: clamp(1.35rem, 2vw, 1.8rem) !important;
+  }
+
+  .comparison-card dl div {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .comparison-card dt {
+    font-size: 1rem;
+  }
+
+  .comparison-card dd {
+    max-width: 15rem;
+    white-space: normal;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .comparison-grid {
+    max-width: 1040px;
   }
 }

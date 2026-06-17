@@ -233,6 +233,23 @@
     changedRecently: "recent changes to family, assets, or state of residence"
   };
 
+
+  const pdfQuestionLabels = {
+    minorChildren: "Minor children / guardianship",
+    realEstate: "Home or real estate",
+    multiState: "Multi-state real estate",
+    avoidProbate: "Avoiding probate matters",
+    privacy: "Privacy matters",
+    blendedFamily: "Blended family",
+    specialNeeds: "Special-needs beneficiary",
+    business: "Business ownership",
+    significantAssets: "Complex assets / tax concerns",
+    incapacity: "Incapacity planning",
+    simpleLowCost: "Low-cost starting point",
+    existingDocuments: "Existing estate documents",
+    changedRecently: "Recent major changes"
+  };
+
   const state = {
     currentIndex: 0,
     answers: {},
@@ -680,7 +697,7 @@
 
   function formatAnswerPlain(value, questionId) {
     if (state.inferredAnswers[questionId]) {
-      return "No (skipped because you said you do not own real estate)";
+      return "No (skipped)";
     }
 
     const labels = {
@@ -719,42 +736,35 @@
     });
 
     const answerItems = questions.map((question) => ({
-      question: question.text,
+      question: pdfQuestionLabels[question.id] || question.text,
       answer: formatAnswerPlain(state.answers[question.id], question.id)
     }));
 
     const pdf = createPdfWriter();
+    const disclaimer = "This downloadable summary is educational information only. It does not provide legal advice, does not create an attorney-client relationship, and does not replace counsel from a licensed attorney. Estate-planning laws vary by state and individual facts matter.";
 
     pdf.addPage();
-    pdf.drawText("Estate Planning Decision Helper", 54, 48, 10, "bold", [11, 31, 54]);
-    pdf.drawText("Educational Summary", 54, 75, 26, "bold", [7, 22, 38]);
-    pdf.drawText(`Generated ${generatedOn}. This summary is educational information only, not legal advice.`, 54, 98, 9.5, "regular", [83, 101, 125]);
-    pdf.drawRule(54, 116, 504, [211, 179, 108]);
-
-    pdf.addCard(54, 138, 504, 178, [255, 250, 240], [229, 215, 190]);
-    pdf.drawPill(`Outcome ${content.key}`, 74, 162, 94, 22, [247, 239, 225], [185, 145, 72], [7, 22, 38]);
-    pdf.drawPill(content.confidence, 460, 162, 78, 22, [220, 235, 228], [188, 207, 198], [63, 112, 95]);
-    let y = pdf.addWrappedText(content.title, 74, 208, 440, 26, 32, "bold", [7, 22, 38]);
-    y = pdf.addWrappedText(content.summary, 74, y + 10, 438, 12.5, 18, "regular", [52, 70, 95]);
-    pdf.y = Math.max(y + 22, 338);
-
-    pdf.addNoteBox(
-      "Important disclaimer",
-      "This PDF is a browser-generated educational summary. It does not provide legal advice, does not create an attorney-client relationship, and does not replace counsel from a licensed attorney. Estate-planning laws vary by state and individual facts matter.",
-      54,
-      pdf.y,
-      504
-    );
-
-    pdf.addSection("Why this result appeared", reasonList);
-    pdf.addSection("What this usually means", content.usuallyMeans);
-    pdf.addSection("Questions to ask an attorney", content.attorneyQuestions);
-    pdf.addSection("Next steps", [
-      ...content.nextSteps,
-      "Remember: this is educational information, not legal advice. Laws vary by state."
-    ]);
+    pdf.addDocumentHeader(generatedOn);
+    pdf.addResultHero(content);
+    pdf.addSectionGrid([
+      { title: "Why this result appeared", items: reasonList, accent: "gold" },
+      { title: "What this usually means", items: content.usuallyMeans, accent: "green" }
+    ], { compact: true });
+    pdf.addSectionGrid([
+      { title: "Questions to ask an attorney", items: content.attorneyQuestions, accent: "gold" },
+      {
+        title: "Next steps",
+        accent: "green",
+        items: [
+          ...content.nextSteps,
+          "Remember: this is educational information, not legal advice. Laws vary by state."
+        ]
+      }
+    ], { compact: true });
 
     pdf.addAnswerSummary("Your answer summary", answerItems);
+    pdf.addUseSummaryCard();
+    pdf.addDisclaimer(disclaimer);
 
     pdf.addFooterToAllPages();
     return pdf.toString();
@@ -763,19 +773,52 @@
   function createPdfWriter() {
     const pageWidth = 612;
     const pageHeight = 792;
-    const margin = 54;
-    const bottomMargin = 68;
+    const margin = 42;
+    const bottomMargin = 36;
     const contentWidth = pageWidth - margin * 2;
     const pages = [];
+
+    const colors = {
+      navy: [7, 22, 38],
+      navy2: [11, 31, 54],
+      navy3: [18, 44, 70],
+      ink: [9, 25, 43],
+      slate: [50, 67, 91],
+      muted: [82, 100, 124],
+      gold: [185, 145, 72],
+      gold2: [211, 179, 108],
+      goldSoft: [246, 235, 212],
+      green: [63, 112, 95],
+      green2: [88, 129, 111],
+      greenSoft: [220, 235, 228],
+      ivory: [255, 250, 240],
+      page: [253, 249, 241],
+      paper: [255, 253, 248],
+      white: [255, 255, 255],
+      border: [228, 216, 195],
+      softBorder: [226, 232, 236],
+      faint: [247, 241, 230]
+    };
+
+    function rgb(color) {
+      return color.map((value) => (value / 255).toFixed(4)).join(" ");
+    }
 
     const writer = {
       pageWidth,
       pageHeight,
       margin,
+      bottomMargin,
+      contentWidth,
       y: margin,
       addPage() {
         pages.push([]);
         this.y = margin;
+        this.drawRect(0, 0, pageWidth, pageHeight, colors.page);
+        this.drawRect(0, 0, 8, pageHeight, [249, 242, 228]);
+        this.drawRect(8, 0, 2, pageHeight, [232, 211, 168]);
+        this.drawRect(pageWidth - 10, 0, 2, pageHeight, [232, 211, 168]);
+        this.drawRect(pageWidth - 8, 0, 8, pageHeight, [249, 242, 228]);
       },
       current() {
         if (pages.length === 0) this.addPage();
@@ -786,95 +829,226 @@
           this.addPage();
         }
       },
-      drawText(text, x, yTop, size = 11, weight = "regular", color = [7, 22, 38]) {
-        const [r, g, b] = color.map((value) => (value / 255).toFixed(4));
+      drawRect(x, yTop, width, height, fill) {
+        const y = pageHeight - yTop - height;
+        this.current().push(`q ${rgb(fill)} rg ${x.toFixed(2)} ${y.toFixed(2)} ${width.toFixed(2)} ${height.toFixed(2)} re f Q`);
+      },
+      drawStrokeRect(x, yTop, width, height, stroke = colors.softBorder, lineWidth = 1) {
+        const y = pageHeight - yTop - height;
+        this.current().push(`q ${rgb(stroke)} RG ${lineWidth.toFixed(2)} w ${x.toFixed(2)} ${y.toFixed(2)} ${width.toFixed(2)} ${height.toFixed(2)} re S Q`);
+      },
+      addCard(x, yTop, width, height, fill = colors.white, stroke = colors.softBorder, lineWidth = 1) {
+        this.drawRect(x, yTop, width, height, fill);
+        this.drawStrokeRect(x, yTop, width, height, stroke, lineWidth);
+      },
+      drawText(text, x, yTop, size = 11, weight = "regular", color = colors.navy) {
         const font = weight === "bold" ? "F2" : "F1";
         const y = pageHeight - yTop;
-        this.current().push(`BT /${font} ${size} Tf ${r} ${g} ${b} rg ${x.toFixed(2)} ${y.toFixed(2)} Td (${escapePdfText(text)}) Tj ET`);
+        this.current().push(`BT /${font} ${size} Tf ${rgb(color)} rg ${x.toFixed(2)} ${y.toFixed(2)} Td (${escapePdfText(text)}) Tj ET`);
       },
-      drawRule(x, yTop, width, color = [229, 235, 239]) {
-        const [r, g, b] = color.map((value) => (value / 255).toFixed(4));
+      drawCenteredText(text, x, yTop, width, size = 8, weight = "bold", color = colors.navy) {
+        const textWidth = estimatePdfTextWidth(text, size, weight);
+        this.drawText(text, x + Math.max(0, (width - textWidth) / 2), yTop, size, weight, color);
+      },
+      drawRule(x, yTop, width, color = colors.gold2, lineWidth = 1.2) {
         const y = pageHeight - yTop;
-        this.current().push(`q ${r} ${g} ${b} RG 1.2 w ${x.toFixed(2)} ${y.toFixed(2)} m ${(x + width).toFixed(2)} ${y.toFixed(2)} l S Q`);
+        this.current().push(`q ${rgb(color)} RG ${lineWidth.toFixed(2)} w ${x.toFixed(2)} ${y.toFixed(2)} m ${(x + width).toFixed(2)} ${y.toFixed(2)} l S Q`);
       },
-      addCard(x, yTop, width, height, fill = [255, 255, 255], stroke = [229, 235, 239]) {
-        const [fr, fg, fb] = fill.map((value) => (value / 255).toFixed(4));
-        const [sr, sg, sb] = stroke.map((value) => (value / 255).toFixed(4));
-        const y = pageHeight - yTop - height;
-        this.current().push(`q ${fr} ${fg} ${fb} rg ${sr} ${sg} ${sb} RG 1 w ${x.toFixed(2)} ${y.toFixed(2)} ${width.toFixed(2)} ${height.toFixed(2)} re B Q`);
+      drawPill(text, x, yTop, width, height, fill, stroke, color, size = 7.5) {
+        this.addCard(x, yTop, width, height, fill, stroke, 0.8);
+        this.drawCenteredText(text.toUpperCase(), x, yTop + height / 2 + size / 2 - 1.1, width, size, "bold", color);
       },
-      drawPill(text, x, yTop, width, height, fill, stroke, color) {
-        this.addCard(x, yTop, width, height, fill, stroke);
-        this.drawText(text.toUpperCase(), x + 11, yTop + 15, 8, "bold", color);
-      },
-      addWrappedText(text, x, yTop, width, size = 11, lineHeight = 16, weight = "regular", color = [52, 70, 95]) {
-        let y = yTop;
+      drawWrapped(text, x, yTop, width, size, weight, color, lineHeight) {
         const lines = wrapPdfText(text, width, size, weight);
+        let y = yTop;
         lines.forEach((line) => {
-          this.ensureSpace(lineHeight + 8);
           this.drawText(line, x, y, size, weight, color);
           y += lineHeight;
-          this.y = y;
         });
         return y;
       },
-      addNoteBox(title, body, x, yTop, width) {
-        const bodyLines = wrapPdfText(body, width - 36, 10.5, "regular");
-        const height = 44 + bodyLines.length * 14;
-        this.ensureSpace(height + 18);
-        yTop = this.y;
-        this.addCard(x, yTop, width, height, [250, 247, 239], [229, 215, 190]);
-        this.drawText(title, x + 18, yTop + 22, 11, "bold", [7, 22, 38]);
-        let y = yTop + 42;
-        bodyLines.forEach((line) => {
-          this.drawText(line, x + 18, y, 10.5, "regular", [52, 70, 95]);
-          y += 14;
+      addDocumentHeader(generatedOn) {
+        const x = margin;
+        this.drawText("ESTATE PLANNING DECISION HELPER", x, 28, 8.4, "bold", colors.green);
+        this.drawText("Educational Summary", x, 57, 28, "bold", colors.ink);
+        this.drawText(`Generated ${generatedOn}  |  Educational information only - not legal advice`, x, 83, 9.4, "regular", colors.muted);
+        this.drawRule(x, 106, contentWidth, colors.gold2, 1.05);
+
+        const chipY = 120;
+        const chips = [
+          { label: "Browser-generated", width: 106 },
+          { label: "Private by design", width: 101 },
+          { label: "Attorney-ready notes", width: 125 }
+        ];
+        let chipX = x;
+        chips.forEach((chip) => {
+          this.drawPill(chip.label, chipX, chipY, chip.width, 19, colors.white, colors.softBorder, colors.slate, 6.4);
+          chipX += chip.width + 9;
         });
-        this.y = yTop + height + 24;
+
+        this.y = 153;
       },
-      addSection(title, items) {
-        const estimated = 42 + items.reduce((sum, item) => sum + wrapPdfText(item, contentWidth - 22, 11.2, "regular").length * 15 + 7, 0);
-        this.ensureSpace(Math.min(estimated, 250));
-        this.drawText(title, margin, this.y, 15, "bold", [7, 22, 38]);
-        this.y += 24;
-        items.forEach((item) => {
-          const lines = wrapPdfText(item, contentWidth - 22, 11.2, "regular");
-          this.ensureSpace(lines.length * 15 + 12);
-          this.drawText("-", margin + 4, this.y, 11.2, "bold", [185, 145, 72]);
-          let lineY = this.y;
-          lines.forEach((line) => {
-            this.drawText(line, margin + 22, lineY, 11.2, "regular", [52, 70, 95]);
-            lineY += 15;
-          });
-          this.y = lineY + 7;
+      addResultHero(content) {
+        const x = margin;
+        const yTop = this.y;
+        const width = contentWidth;
+        const innerX = x + 24;
+        const innerWidth = width - 48;
+        const titleSize = content.title.length > 46 ? 22 : 24;
+        const titleLineHeight = titleSize + 4;
+        const titleLines = wrapPdfText(content.title, innerWidth - 122, titleSize, "bold");
+        const summaryLines = wrapPdfText(content.summary, innerWidth - 30, 9.8, "regular");
+        const cardHeight = Math.max(155, 62 + titleLines.length * titleLineHeight + 8 + summaryLines.length * 12.5 + 24);
+
+        this.ensureSpace(cardHeight + 18);
+        this.addCard(x, yTop, width, cardHeight, colors.navy, colors.navy3, 1);
+        this.drawRect(x, yTop, width, 7, colors.gold2);
+        this.drawRect(x + width - 122, yTop + 7, 122, cardHeight - 7, [8, 25, 42]);
+        this.drawRect(x + width - 122, yTop + 7, 3, cardHeight - 7, [19, 49, 73]);
+        this.drawPill(`Outcome ${content.key}`, innerX, yTop + 27, 92, 23, colors.goldSoft, colors.gold2, colors.ink, 7.1);
+        this.drawPill(content.confidence, x + width - 112, yTop + 27, 88, 23, colors.greenSoft, [180, 201, 192], colors.green, 7.1);
+
+        let y = yTop + 67;
+        titleLines.forEach((line) => {
+          this.drawText(line, innerX, y, titleSize, "bold", colors.ivory);
+          y += titleLineHeight;
         });
-        this.y += 12;
+
+        y += 7;
+        summaryLines.forEach((line) => {
+          this.drawText(line, innerX, y, 9.8, "regular", [234, 239, 241]);
+          y += 12.5;
+        });
+
+        this.y = yTop + cardHeight + 18;
+      },
+      measureCardSection(section, width, compact = false) {
+        const bulletWidth = width - 52;
+        const size = compact ? 8.4 : 8.8;
+        const lineHeight = compact ? 10.4 : 11.1;
+        const listHeight = section.items.reduce((sum, item) => {
+          const lines = wrapPdfText(item, bulletWidth, size, "regular");
+          return sum + lines.length * lineHeight + (compact ? 7 : 8);
+        }, 0);
+        return Math.max(compact ? 116 : 132, 50 + listHeight + 16);
+      },
+      drawCardSection(section, x, yTop, width, height, compact = false) {
+        const accent = section.accent === "green" ? colors.green : colors.gold2;
+        this.addCard(x, yTop, width, height, colors.white, colors.softBorder, 1);
+        this.drawRect(x, yTop, 5, height, accent);
+        this.drawText(section.title, x + 17, yTop + 24, 11.6, "bold", colors.ink);
+        this.drawRule(x + 17, yTop + 34, width - 34, [237, 230, 216], 0.65);
+        let y = yTop + 50;
+        const size = compact ? 8.4 : 8.8;
+        const lineHeight = compact ? 10.4 : 11.1;
+        section.items.forEach((item) => {
+          const lines = wrapPdfText(item, width - 52, size, "regular");
+          this.drawText("-", x + 18, y, size, "bold", colors.gold);
+          lines.forEach((line, index) => {
+            this.drawText(line, x + 32, y + index * lineHeight, size, "regular", colors.slate);
+          });
+          y += lines.length * lineHeight + (compact ? 7 : 8);
+        });
+      },
+      addSectionGrid(sections, options = {}) {
+        const compact = Boolean(options.compact);
+        const gap = 16;
+        const colWidth = (contentWidth - gap) / 2;
+        const heights = sections.map((section) => this.measureCardSection(section, colWidth, compact));
+        const rowHeight = Math.max(...heights);
+        this.ensureSpace(rowHeight + 14);
+        const yTop = this.y;
+        sections.forEach((section, index) => {
+          const x = margin + index * (colWidth + gap);
+          this.drawCardSection(section, x, yTop, colWidth, rowHeight, compact);
+        });
+        this.y = yTop + rowHeight + 18;
       },
       addAnswerSummary(title, items) {
-        this.ensureSpace(120);
-        this.drawText(title, margin, this.y, 15, "bold", [7, 22, 38]);
-        this.y += 25;
-        items.forEach((item) => {
-          const answerLine = `${item.question} — ${item.answer}`;
-          const lines = wrapPdfText(answerLine, contentWidth - 22, 10.5, "regular");
-          this.ensureSpace(lines.length * 14 + 10);
-          this.drawText("-", margin + 4, this.y, 10.5, "bold", [185, 145, 72]);
-          let lineY = this.y;
-          lines.forEach((line, index) => {
-            this.drawText(line, margin + 22, lineY, 10.5, index === 0 ? "bold" : "regular", [52, 70, 95]);
-            lineY += 14;
+        const cardX = margin;
+        const cardWidth = contentWidth;
+        const innerX = cardX + 20;
+        const innerWidth = cardWidth - 40;
+        const gap = 20;
+        const colWidth = (innerWidth - gap) / 2;
+        const splitIndex = Math.ceil(items.length / 2);
+        const columns = [items.slice(0, splitIndex), items.slice(splitIndex)];
+
+        const measureColumn = (column) => column.reduce((height, item) => {
+          const answerLine = `${item.question} - ${item.answer}`;
+          return height + wrapPdfText(answerLine, colWidth - 18, 7.8, "regular").length * 10.2 + 6;
+        }, 0);
+
+        const cardHeight = 54 + Math.max(...columns.map(measureColumn));
+        this.ensureSpace(cardHeight + 16);
+        const startY = this.y;
+        this.addCard(cardX, startY, cardWidth, cardHeight, colors.white, colors.softBorder, 1);
+        this.drawRect(cardX, startY, cardWidth, 6, colors.green);
+        this.drawText(title, innerX, startY + 28, 13.2, "bold", colors.ink);
+        this.drawText("Non-sensitive answers only", cardX + cardWidth - 133, startY + 28, 8.1, "bold", colors.green);
+
+        columns.forEach((column, columnIndex) => {
+          const x = innerX + columnIndex * (colWidth + gap);
+          let y = startY + 54;
+          column.forEach((item) => {
+            const answerLine = `${item.question} - ${item.answer}`;
+            const lines = wrapPdfText(answerLine, colWidth - 18, 7.8, "regular");
+            this.drawText("-", x, y, 7.8, "bold", colors.gold);
+            lines.forEach((line, lineIndex) => {
+              this.drawText(line, x + 14, y + lineIndex * 10.2, 7.8, lineIndex === 0 ? "bold" : "regular", colors.slate);
+            });
+            y += lines.length * 10.2 + 6;
           });
-          this.y = lineY + 6;
         });
+
+        this.y = startY + cardHeight + 18;
+      },
+      addUseSummaryCard() {
+        const x = margin;
+        const yTop = this.y;
+        const width = contentWidth;
+        const height = 104;
+        this.ensureSpace(height + 16);
+        this.addCard(x, yTop, width, height, [250, 247, 239], colors.border, 1);
+        this.drawRect(x, yTop, 6, height, colors.gold2);
+        this.drawText("How to use this summary", x + 20, yTop + 25, 12.2, "bold", colors.ink);
+        const notes = [
+          "Use this as a conversation guide, not a legal conclusion.",
+          "Bring it to a licensed estate-planning attorney for state-specific review.",
+          "Do not add account numbers, Social Security numbers, or exact asset values."
+        ];
+        let y = yTop + 46;
+        notes.forEach((note, index) => {
+          this.drawPill(String(index + 1), x + 20, y - 10, 18, 18, colors.goldSoft, colors.gold2, colors.ink, 7.4);
+          const lines = wrapPdfText(note, width - 72, 8.6, "regular");
+          lines.forEach((line, lineIndex) => {
+            this.drawText(line, x + 48, y + lineIndex * 10.8, 8.6, "regular", colors.slate);
+          });
+          y += Math.max(22, lines.length * 10.8 + 8);
+        });
+        this.y = yTop + height + 18;
+      },
+      addDisclaimer(body) {
+        const bodyLines = wrapPdfText(body, contentWidth - 38, 8.3, "regular");
+        const height = 34 + bodyLines.length * 10.8;
+        this.ensureSpace(height + 8);
+        const yTop = this.y;
+        this.addCard(margin, yTop, contentWidth, height, colors.white, colors.border, 1);
+        this.drawText("Important educational disclaimer", margin + 18, yTop + 20, 10.4, "bold", colors.ink);
+        let y = yTop + 34;
+        bodyLines.forEach((line) => {
+          this.drawText(line, margin + 18, y, 8.3, "regular", colors.slate);
+          y += 10.8;
+        });
+        this.y = yTop + height + 12;
       },
       addFooterToAllPages() {
         const total = pages.length;
         pages.forEach((commands, index) => {
           const pageNum = index + 1;
           const footerText = `Educational only. Not legal advice. Laws vary by state. Page ${pageNum} of ${total}`;
-          const yTop = pageHeight - 34;
-          const [r, g, b] = [83, 101, 125].map((value) => (value / 255).toFixed(4));
-          commands.push(`BT /F1 8.5 Tf ${r} ${g} ${b} rg ${margin.toFixed(2)} ${(pageHeight - yTop).toFixed(2)} Td (${escapePdfText(footerText)}) Tj ET`);
+          const yTop = pageHeight - 29;
+          commands.push(`BT /F1 8.1 Tf ${rgb(colors.muted)} rg ${margin.toFixed(2)} ${(pageHeight - yTop).toFixed(2)} Td (${escapePdfText(footerText)}) Tj ET`);
         });
       },
       toString() {
@@ -885,8 +1059,8 @@
         objects.push("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>");
         objects.push("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>");
 
-        pages.forEach((commands, index) => {
-          const pageObjectNumber = 5 + index * 2;
+        pages.forEach((commands) => {
+          const pageObjectNumber = 5 + (objects.length - 4);
           const contentObjectNumber = pageObjectNumber + 1;
           const stream = commands.join("\n");
           objects.push(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageWidth} ${pageHeight}] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ${contentObjectNumber} 0 R >>`);
@@ -957,7 +1131,7 @@
   }
 
   function estimatePdfTextWidth(text, fontSize, weight) {
-    const averageWidth = weight === "bold" ? 0.55 : 0.5;
+    const averageWidth = weight === "bold" ? 0.58 : 0.535;
     return normalizePdfText(text).length * fontSize * averageWidth;
   }
 
