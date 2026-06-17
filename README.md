@@ -36,7 +36,7 @@ No build step is required.
 
 1. Download or clone this repository.
 2. Open `index.html` directly in a browser.
-3. Complete the quiz and verify the result summary and PDF download.
+3. Complete the quiz and verify the result summary, PDF download, and print action.
 
 For a local server, you can also run:
 
@@ -192,7 +192,7 @@ Recommended language to preserve:
 
 - Opens locally with `index.html`
 - Quiz works end-to-end
-- Back, next, restart, validation, and PDF download actions work
+- Back, next, restart, validation, PDF download, and print actions work
 - All four result types are reachable through different answer paths
 - Responsive layout is designed for mobile, tablet, and desktop
 - No backend, database, tracking, or data storage
