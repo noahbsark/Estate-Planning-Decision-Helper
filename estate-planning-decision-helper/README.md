@@ -190,12 +190,12 @@ Recommended language to preserve:
 
 ## Payment package buttons
 
-The result screen includes optional package cards for an Attorney-Drafted Will Plan, Attorney-Drafted Trust Plan, and Attorney Consultation. Prices and checkout links are configured near the top of `script.js` in `PACKAGE_CONFIG`.
+The result screen includes optional package cards for a Will Package, Trust Package, and Attorney Consultation. Prices and checkout links are configured near the top of `script.js` in `PACKAGE_CONFIG`.
 
 Recommended placeholder prices:
 
-- Attorney-Drafted Will Plan: `$750`
-- Attorney-Drafted Trust Plan: `$2,500`
-- Attorney Consultation: `$250`
+- Will Package: `$199`
+- Trust Package: `$599`
+- Attorney Consultation: `Custom`
 
-To accept payment on GitHub Pages without a backend, create Stripe Payment Links for each product, then replace the placeholder `href` values in `PACKAGE_CONFIG` with the live `https://buy.stripe.com/...` URLs. Do not sell legal advice or attorney-drafted legal documents unless the service is actually performed or reviewed by a licensed attorney and your engagement process, conflicts checks, refund policy, terms, and state limitations are reviewed by counsel.
+To accept payment on GitHub Pages without a backend, create Stripe Payment Links for each product, then replace the placeholder `href` values in `PACKAGE_CONFIG` with the live `https://buy.stripe.com/...` URLs. Do not sell legal advice or attorney-reviewed legal documents unless the service is backed by a licensed attorney and your terms, engagement process, refund policy, and state limitations are reviewed by counsel.

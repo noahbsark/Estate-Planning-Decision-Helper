@@ -5,22 +5,22 @@
   // Example: https://buy.stripe.com/abc123...
   const PACKAGE_CONFIG = {
     will: {
-      title: "Attorney-Drafted Will Plan",
-      price: "$750",
+      title: "Will Package",
+      price: "$199",
       href: "#replace-with-will-payment-link",
-      note: "For simpler situations that need an attorney-drafted will, guardianship nominations, and coordinated basic planning documents."
+      note: "Good for simpler plans that need basic inheritance directions and guardianship planning."
     },
     trust: {
-      title: "Attorney-Drafted Trust Plan",
-      price: "$2,500",
+      title: "Trust Package",
+      price: "$599",
       href: "#replace-with-trust-payment-link",
-      note: "For trust-based planning with an attorney-drafted revocable trust, pour-over will, and funding guidance."
+      note: "Good for privacy, probate-avoidance, real estate, and incapacity-planning goals."
     },
     consultation: {
       title: "Attorney Consultation",
-      price: "$250",
+      price: "Custom",
       href: "mailto:hello@example.com?subject=Estate%20Planning%20Consultation%20Request",
-      note: "Recommended before purchase for blended families, special-needs planning, businesses, tax concerns, or multi-state property."
+      note: "Recommended for blended families, special-needs planning, businesses, tax concerns, or multi-state property."
     }
   };
 
@@ -595,7 +595,7 @@
         <a
           class="btn ${isRecommended ? "btn-gold" : "btn-secondary"} package-button ${isPlaceholder ? "is-placeholder" : ""}"
           href="${escapeHtml(href)}"
-          ${isPlaceholder ? 'aria-disabled=\"true\"' : ''}
+          ${isPlaceholder ? "aria-disabled="true"" : ""}
         >
           ${isPlaceholder ? "Add payment link" : `${label} ${escapeHtml(config.title)}`}
         </a>
@@ -667,7 +667,7 @@
               <p class="cta-kicker">Optional next step</p>
               <h4 id="packages-heading">Choose a package</h4>
               <p>
-                The highlighted option matches your answers. Prices assume attorney-drafted service delivery. The other options remain available if you prefer a different path.
+                The highlighted option matches your answers. The other package is still available if you prefer it. Payment links are placeholders until you connect Stripe.
               </p>
             </div>
             <div class="package-grid">
@@ -676,7 +676,7 @@
               ${renderPackageCard("consultation", getRecommendedPackage(resultData.outcome))}
             </div>
             <p class="package-disclaimer">
-              Educational only. Do not sell these as attorney-drafted legal documents unless a licensed attorney actually reviews the client’s facts, provides the service, and confirms state-specific requirements. Laws vary by state.
+              Educational only. Buying a package should not be presented as legal advice unless a licensed attorney reviews the client’s facts and documents. Laws vary by state.
             </p>
           </section>
         </div>
