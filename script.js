@@ -8,19 +8,22 @@
       title: "Attorney-Drafted Will Plan",
       price: "$750",
       href: "#replace-with-will-payment-link",
-      note: "For simpler situations that need an attorney-drafted will, guardianship nominations, and coordinated basic planning documents."
+      note: "For simpler estates that need attorney-prepared will documents, guardianship language, and core fiduciary choices.",
+      bullets: ["Attorney-drafted will", "Basic document coordination", "Designed for lower-complexity plans"]
     },
     trust: {
       title: "Attorney-Drafted Trust Plan",
       price: "$2,500",
       href: "#replace-with-trust-payment-link",
-      note: "For trust-based planning with an attorney-drafted revocable trust, pour-over will, and funding guidance."
+      note: "For people who want trust-centered planning for privacy, probate reduction, real estate, and incapacity continuity.",
+      bullets: ["Revocable trust package", "Pour-over will coordination", "Funding guidance checklist"]
     },
     consultation: {
       title: "Attorney Consultation",
       price: "$250",
       href: "mailto:hello@example.com?subject=Estate%20Planning%20Consultation%20Request",
-      note: "Recommended before purchase for blended families, special-needs planning, businesses, tax concerns, or multi-state property."
+      note: "Best when your answers suggest special-needs, business, tax, blended-family, or multi-state complexity.",
+      bullets: ["Attorney issue-spotting", "State-specific review", "Plan recommendation"]
     }
   };
 
@@ -43,7 +46,7 @@
     },
     {
       id: "multiState",
-      text: "Do you own real estate in more than one state?",
+      text: "Do you own real estate in multiple states?",
       hint: "Multi-state real estate can add complexity because probate and property rules may differ by state.",
       yes: { trust: 2, attorney: 5 },
       no: { simple: 1 },
@@ -67,8 +70,8 @@
     },
     {
       id: "blendedFamily",
-      text: "Do you have a blended family or children from a prior relationship?",
-      hint: "Blended-family planning often benefits from careful drafting to balance spouse, child, and beneficiary expectations.",
+      text: "Do you have a blended family?",
+      hint: "This can include children from a prior relationship or family dynamics that may need careful drafting.",
       yes: { attorney: 5, both: 1 },
       no: { simple: 1 },
       unsure: { attorney: 2 }
@@ -91,24 +94,24 @@
     },
     {
       id: "significantAssets",
-      text: "Do you have significant or complex assets, investments, life insurance, or possible tax-planning concerns?",
-      hint: "You do not need to estimate exact values here. The goal is to flag whether your plan may require more tailoring.",
+      text: "Do you have complex assets or tax concerns?",
+      hint: "This can include investments, life insurance, business interests, larger estates, or tax-planning goals. No exact values needed.",
       yes: { trust: 3, attorney: 3 },
       no: { simple: 1 },
       unsure: { attorney: 2 }
     },
     {
       id: "incapacity",
-      text: "Do you want someone to manage assets if you become incapacitated?",
-      hint: "Trusts, powers of attorney, and health care directives can work together to support incapacity planning.",
+      text: "Do you want incapacity planning?",
+      hint: "This means planning for someone you trust to manage assets or decisions if you cannot act for yourself.",
       yes: { trust: 4, both: 1 },
       no: { simple: 1 },
       unsure: { trust: 1, attorney: 1 }
     },
     {
       id: "simpleLowCost",
-      text: "Are you mainly looking for a simple, low-cost starting point?",
-      hint: "A will may be a common starting point for simpler situations, but it may not address privacy, probate, or incapacity goals.",
+      text: "Are you looking for a simple starting point?",
+      hint: "A simpler will-based plan may be enough for some people, but it may not address privacy, probate, or incapacity goals.",
       yes: { simple: 3, will: 3 },
       no: { trust: 1, both: 1 },
       unsure: { attorney: 1 }
@@ -123,8 +126,8 @@
     },
     {
       id: "changedRecently",
-      text: "Have your family, assets, or state of residence changed recently?",
-      hint: "Major life changes are a common reason to review or update an estate plan.",
+      text: "Have your circumstances changed recently?",
+      hint: "Examples include marriage, divorce, a move, a new child, a death, or major asset changes.",
       yes: { attorney: 3, review: 2 },
       no: { simple: 1 },
       unsure: { attorney: 2, review: 1 }
@@ -148,23 +151,6 @@
       microcopy: "I would like to flag this."
     }
   ];
-
-  const questionStages = {
-    minorChildren: { step: 1, name: "Family", helper: "Guardianship and family structure" },
-    blendedFamily: { step: 1, name: "Family", helper: "Guardianship and family structure" },
-    specialNeeds: { step: 1, name: "Family", helper: "Guardianship and family structure" },
-    realEstate: { step: 2, name: "Assets", helper: "Property and asset complexity" },
-    multiState: { step: 2, name: "Assets", helper: "Property and asset complexity" },
-    business: { step: 2, name: "Assets", helper: "Property and asset complexity" },
-    significantAssets: { step: 2, name: "Assets", helper: "Property and asset complexity" },
-    avoidProbate: { step: 3, name: "Goals", helper: "Privacy, probate, and continuity goals" },
-    privacy: { step: 3, name: "Goals", helper: "Privacy, probate, and continuity goals" },
-    incapacity: { step: 3, name: "Goals", helper: "Privacy, probate, and continuity goals" },
-    simpleLowCost: { step: 3, name: "Goals", helper: "Privacy, probate, and continuity goals" },
-    existingDocuments: { step: 4, name: "Review", helper: "Existing documents and recent changes" },
-    changedRecently: { step: 4, name: "Review", helper: "Existing documents and recent changes" }
-  };
-
 
   const outcomeContent = {
     will: {
@@ -266,7 +252,7 @@
     blendedFamily: "blended-family or prior-relationship considerations",
     specialNeeds: "a beneficiary with special-needs planning considerations",
     business: "business ownership",
-    significantAssets: "significant or complex assets, investments, insurance, or tax-planning concerns",
+    significantAssets: "complex assets, insurance, business interests, or tax-planning concerns",
     incapacity: "incapacity-management goals",
     simpleLowCost: "a preference for a simple, lower-cost starting point",
     existingDocuments: "existing estate-planning documents that may need review",
@@ -300,7 +286,6 @@
   const questionCount = document.querySelector("#question-count");
   const progressPercent = document.querySelector("#progress-percent");
   const progressBar = document.querySelector("#progress-bar");
-  const progressHelper = document.querySelector("#progress-helper");
   const statusRegion = document.querySelector("#quiz-status");
   const year = document.querySelector("#year");
 
@@ -403,13 +388,11 @@
     const questionNumber = state.currentIndex + 1;
     const percent = Math.round((questionNumber / visibleQuestions.length) * 100);
 
-    const stage = getQuestionStage(question.id);
-    updateProgress(questionNumber, percent, visibleQuestions.length, getProgressHelperText(stage, questionNumber, visibleQuestions.length));
+    updateProgress(questionNumber, percent, visibleQuestions.length);
 
     quizContent.innerHTML = `
-      <form class="question-panel" novalidate tabindex="-1">
-        <span class="question-label">Step ${stage.step} of 4 · ${stage.name}</span>
-        <p class="question-stage-note">${escapeHtml(stage.helper)} · ${escapeHtml(getRemainingText(questionNumber, visibleQuestions.length))}</p>
+      <form class="question-panel" data-question-id="${escapeHtml(question.id)}" novalidate tabindex="-1">
+        <span class="question-label">Question ${questionNumber}</span>
         <h3 class="question-title" id="active-question">${escapeHtml(question.text)}</h3>
         <p class="question-hint">${escapeHtml(question.hint)}</p>
 
@@ -454,7 +437,7 @@
     focusFirstAvailableControl();
   }
 
-  function updateProgress(label, percent, totalQuestions, helperText = "") {
+  function updateProgress(label, percent, totalQuestions) {
     if (typeof label === "number") {
       questionCount.textContent = `Question ${label} of ${totalQuestions || getVisibleQuestions().length}`;
     } else {
@@ -463,25 +446,6 @@
 
     progressPercent.textContent = `${percent}%`;
     progressBar.style.width = `${percent}%`;
-    if (progressHelper) {
-      progressHelper.textContent = helperText;
-    }
-  }
-
-  function getQuestionStage(questionId) {
-    return questionStages[questionId] || { step: 1, name: "Basics", helper: "Common planning considerations" };
-  }
-
-  function getRemainingText(questionNumber, totalQuestions) {
-    const remaining = Math.max(totalQuestions - questionNumber, 0);
-    if (remaining === 0) return "final question";
-    if (remaining <= 3) return "almost done";
-    const minutes = Math.max(1, Math.ceil(remaining * 0.22));
-    return `about ${minutes} minute${minutes === 1 ? "" : "s"} left`;
-  }
-
-  function getProgressHelperText(stage, questionNumber, totalQuestions) {
-    return `Step ${stage.step} of 4 · ${stage.name} · ${getRemainingText(questionNumber, totalQuestions)}`;
   }
 
   function focusFirstAvailableControl() {
@@ -490,6 +454,22 @@
       if (panel instanceof HTMLElement) {
         panel.focus({ preventScroll: true });
       }
+    });
+  }
+
+  function scrollQuizCardIntoView() {
+    window.requestAnimationFrame(() => {
+      const card = document.querySelector("#quiz .quiz-card");
+      if (!(card instanceof HTMLElement)) return;
+
+      const header = document.querySelector(".site-header");
+      const headerHeight = header instanceof HTMLElement ? header.getBoundingClientRect().height : 78;
+      const targetTop = window.scrollY + card.getBoundingClientRect().top - headerHeight - 24;
+
+      window.scrollTo({
+        top: Math.max(0, targetTop),
+        behavior: prefersReducedMotion() ? "auto" : "smooth"
+      });
     });
   }
 
@@ -519,16 +499,19 @@
     if (state.currentIndex < visibleQuestions.length - 1) {
       state.currentIndex += 1;
       renderQuestion();
+      scrollQuizCardIntoView();
       return;
     }
 
     renderResult(calculateOutcome());
+    scrollQuizCardIntoView();
   }
 
   function goBack() {
     if (state.currentIndex > 0) {
       state.currentIndex -= 1;
       renderQuestion();
+      scrollQuizCardIntoView();
     }
   }
 
@@ -537,10 +520,7 @@
     state.answers = {};
     state.inferredAnswers = {};
     renderQuestion();
-    const quizSection = document.querySelector("#quiz");
-    if (quizSection) {
-      quizSection.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "start" });
-    }
+    scrollQuizCardIntoView();
   }
 
   function calculateOutcome() {
@@ -619,22 +599,29 @@
   function renderPackageCard(key, recommendedKey) {
     const config = PACKAGE_CONFIG[key];
     const isRecommended = key === recommendedKey;
-    const label = key === "consultation" ? "Request consultation" : "Check eligibility";
+    const label = key === "consultation" ? "Request consultation" : "Start secure checkout";
     const href = config.href;
     const isPlaceholder = href.startsWith("#replace-with");
+    const bulletList = (config.bullets || [])
+      .map((item) => `<li>${escapeHtml(item)}</li>`)
+      .join("");
 
     return `
       <article class="package-card ${isRecommended ? "recommended" : ""}" aria-label="${escapeHtml(config.title)}">
-        ${isRecommended ? `<span class="recommended-pill">Recommended from your answers</span>` : ""}
+        <div class="package-card-accent" aria-hidden="true"></div>
         <div class="package-card-top">
-          <h4>${escapeHtml(config.title)}</h4>
+          <div>
+            ${isRecommended ? `<span class="recommended-pill">Suggested by your answers</span>` : `<span class="recommended-pill neutral-pill">Available option</span>`}
+            <h4>${escapeHtml(config.title)}</h4>
+          </div>
           <div class="package-price">${escapeHtml(config.price)}</div>
         </div>
         <p>${escapeHtml(config.note)}</p>
+        <ul class="package-includes">${bulletList}</ul>
         <a
           class="btn ${isRecommended ? "btn-gold" : "btn-secondary"} package-button ${isPlaceholder ? "is-placeholder" : ""}"
           href="${escapeHtml(href)}"
-          ${isPlaceholder ? 'aria-disabled=\"true\"' : ''}
+          ${isPlaceholder ? 'aria-disabled="true"' : ""}
         >
           ${isPlaceholder ? "Add payment link" : label}
         </a>
@@ -644,13 +631,10 @@
 
   function renderResult(resultData) {
     document.body.classList.add("result-open");
-    updateProgress("Summary ready", 100, undefined, "Personalized educational summary ready · download or review next steps");
+    updateProgress("Summary ready", 100);
 
     const content = outcomeContent[resultData.outcome];
     const reasonList = getReasonList(resultData);
-    const priorityFlags = getPriorityFlags(resultData);
-    const prepChecklist = getAttorneyPrepChecklist(resultData);
-    const personalizedReadout = getPersonalizedReadout(resultData);
     const answerSummary = questions
       .map((question) => {
         const value = state.answers[question.id] || "not answered";
@@ -666,20 +650,6 @@
         </div>
         <h3 id="result-title">${content.title}</h3>
         <p class="result-lead">${content.summary}</p>
-
-        <div class="result-snapshot" aria-label="Personalized result snapshot">
-          <section class="snapshot-card snapshot-card-primary">
-            <p class="snapshot-kicker">Recommended next step</p>
-            <h4>${escapeHtml(getRecommendedNextStepLabel(resultData.outcome))}</h4>
-            <p>${escapeHtml(personalizedReadout)}</p>
-          </section>
-          <section class="snapshot-card">
-            <p class="snapshot-kicker">Planning priorities flagged</p>
-            <div class="priority-tags">
-              ${priorityFlags.map((flag) => `<span>${escapeHtml(flag)}</span>`).join("")}
-            </div>
-          </section>
-        </div>
 
         <div class="result-details-grid">
           <section class="details-card" aria-labelledby="why-heading">
@@ -711,13 +681,6 @@
             </ul>
           </section>
 
-          <section class="details-card prep-checklist-card" aria-labelledby="prep-heading">
-            <h4 id="prep-heading">Attorney prep checklist</h4>
-            <ul class="clean-list">
-              ${prepChecklist.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
-            </ul>
-          </section>
-
           <section class="details-card answer-summary-card" aria-labelledby="answers-heading">
             <h4 id="answers-heading">Your answer summary</h4>
             <ul class="clean-list answer-summary-list">
@@ -730,7 +693,7 @@
               <p class="cta-kicker">Optional next step</p>
               <h4 id="packages-heading">Attorney-drafted next steps</h4>
               <p>
-                The highlighted option is the closest fit based on your answers. You can still choose another path, and complex situations should begin with a consultation.
+                The highlighted option is the closest fit based on your answers. Every purchase should begin with eligibility review, conflict checks, and state-specific attorney confirmation.
               </p>
             </div>
             <div class="package-grid">
@@ -739,7 +702,7 @@
               ${renderPackageCard("consultation", getRecommendedPackage(resultData.outcome))}
             </div>
             <p class="package-disclaimer">
-              Educational only. Package buttons should connect to a real attorney-led intake and payment workflow. Do not treat the quiz result as legal advice; state-specific review is still required.
+              Educational only. Payment does not by itself create legal advice or an attorney-client relationship. Use real payment links only after attorney availability, state coverage, and engagement terms are in place.
             </p>
           </section>
         </div>
@@ -761,65 +724,6 @@
         resultCard.focus({ preventScroll: true });
       }
     });
-  }
-
-  function getPriorityFlags(resultData) {
-    const flags = [];
-    const add = (condition, label) => {
-      if (condition && !flags.includes(label)) flags.push(label);
-    };
-
-    add(state.answers.minorChildren === "yes", "Guardianship");
-    add(state.answers.realEstate === "yes", "Real estate");
-    add(state.answers.multiState === "yes", "Multi-state property");
-    add(state.answers.avoidProbate === "yes", "Probate avoidance");
-    add(state.answers.privacy === "yes", "Privacy");
-    add(state.answers.incapacity === "yes", "Incapacity planning");
-    add(state.answers.blendedFamily === "yes", "Blended-family planning");
-    add(state.answers.specialNeeds === "yes", "Special-needs planning");
-    add(state.answers.business === "yes", "Business succession");
-    add(state.answers.significantAssets === "yes", "Complex assets");
-    add(state.answers.existingDocuments === "yes", "Document review");
-    add(state.answers.changedRecently === "yes", "Recent life changes");
-
-    if (resultData.unsureCount > 0) flags.push("Questions to confirm");
-    if (flags.length === 0) flags.push("Basic directions", "Fiduciary choices", "Beneficiary review");
-    return flags.slice(0, 7);
-  }
-
-  function getPersonalizedReadout(resultData) {
-    const flags = getPriorityFlags(resultData);
-    if (resultData.outcome === "attorney") {
-      return `Your answers flagged ${joinHumanList(flags.slice(0, 3).map((item) => item.toLowerCase()))}. A consultation is the safest first step before selecting a document package.`;
-    }
-    if (resultData.outcome === "both") {
-      return "Your answers point to a combined conversation: a will for guardianship and backup directions, plus trust planning for privacy, probate, and continuity goals.";
-    }
-    if (resultData.outcome === "trust") {
-      return "Your answers suggest trust-based goals such as probate avoidance, privacy, real estate, or incapacity planning may be worth discussing.";
-    }
-    return "Your answers suggest a simpler starting point. A will package may be enough to begin, but state law and your full facts still matter.";
-  }
-
-  function getRecommendedNextStepLabel(outcome) {
-    if (outcome === "will") return "Start with the Attorney-Drafted Will Plan";
-    if (outcome === "trust" || outcome === "both") return "Start with the Attorney-Drafted Trust Plan";
-    return "Start with an Attorney Consultation";
-  }
-
-  function getAttorneyPrepChecklist(resultData) {
-    const checklist = [
-      "Choose first and backup decision-makers for financial and health matters.",
-      "List broad asset categories without account numbers or exact balances.",
-      "Review beneficiary designations for retirement accounts, insurance, and bank accounts."
-    ];
-
-    if (state.answers.minorChildren === "yes") checklist.unshift("Think through guardian and backup guardian choices for minor children.");
-    if (state.answers.realEstate === "yes") checklist.push("Note each real-estate property and whose name is on title.");
-    if (state.answers.existingDocuments === "yes") checklist.push("Gather existing wills, trusts, powers of attorney, and health care directives.");
-    if (resultData.outcome === "attorney") checklist.push("Prepare a short list of questions for state-specific legal review.");
-
-    return checklist.slice(0, 6);
   }
 
   function getReasonList(resultData) {
@@ -920,14 +824,11 @@
   function createSummaryPdf(resultData) {
     const content = outcomeContent[resultData.outcome];
     const reasonList = getReasonList(resultData);
-    const priorityFlags = getPriorityFlags(resultData);
-    const prepChecklist = getAttorneyPrepChecklist(resultData);
     const generatedOn = new Date().toLocaleDateString(undefined, {
       year: "numeric",
       month: "long",
       day: "numeric"
     });
-
 
     const answerItems = questions.map((question) => ({
       question: pdfQuestionLabels[question.id] || question.text,
@@ -940,7 +841,6 @@
     pdf.addPage();
     pdf.addDocumentHeader(generatedOn);
     pdf.addResultHero(content);
-    pdf.addPriorityStrip(priorityFlags, getRecommendedNextStepLabel(resultData.outcome));
     pdf.addSectionGrid([
       { title: "Why this result appeared", items: reasonList, accent: "gold" },
       { title: "What this usually means", items: content.usuallyMeans, accent: "green" }
@@ -958,7 +858,6 @@
     ], { compact: true });
 
     pdf.addAnswerSummary("Your answer summary", answerItems);
-    pdf.addPrepChecklist(prepChecklist);
     pdf.addUseSummaryCard();
     pdf.addDisclaimer(disclaimer);
 
@@ -1199,49 +1098,6 @@
         });
 
         this.y = startY + cardHeight + 18;
-      },
-      addPriorityStrip(flags, recommendation) {
-        const x = margin;
-        const yTop = this.y;
-        const height = 72;
-        this.ensureSpace(height + 14);
-        this.addCard(x, yTop, contentWidth, height, colors.white, colors.softBorder, 0.9);
-        this.drawRect(x, yTop, 5, height, colors.green);
-        this.drawText("Recommended next step", x + 18, yTop + 22, 10.5, "bold", colors.ink);
-        this.drawWrapped(recommendation, x + 18, yTop + 38, 230, 8.3, "regular", colors.slate, 10.2);
-        this.drawText("Priorities flagged", x + 292, yTop + 22, 10.5, "bold", colors.ink);
-        let chipX = x + 292;
-        let chipY = yTop + 34;
-        flags.slice(0, 6).forEach((flag) => {
-          const chipWidth = Math.min(92, Math.max(48, estimatePdfTextWidth(flag, 6.5, "bold") + 18));
-          if (chipX + chipWidth > x + contentWidth - 12) {
-            chipX = x + 292;
-            chipY += 20;
-          }
-          this.drawPill(flag, chipX, chipY, chipWidth, 15, colors.greenSoft, [183, 203, 194], colors.green, 6.1);
-          chipX += chipWidth + 6;
-        });
-        this.y = yTop + height + 14;
-      },
-      addPrepChecklist(items) {
-        const x = margin;
-        const yTop = this.y;
-        const bodyWidth = contentWidth - 44;
-        const lineHeight = 10.2;
-        const bodyHeight = items.reduce((sum, item) => sum + wrapPdfText(item, bodyWidth - 20, 8.2, "regular").length * lineHeight + 5, 0);
-        const height = Math.max(72, 36 + bodyHeight);
-        this.ensureSpace(height + 14);
-        this.addCard(x, yTop, contentWidth, height, colors.faint, colors.border, 0.9);
-        this.drawRect(x, yTop, 5, height, colors.gold2);
-        this.drawText("Attorney prep checklist", x + 18, yTop + 23, 11.4, "bold", colors.ink);
-        let y = yTop + 43;
-        items.forEach((item) => {
-          const lines = wrapPdfText(item, bodyWidth - 20, 8.2, "regular");
-          this.drawText("-", x + 18, y, 8.2, "bold", colors.gold);
-          lines.forEach((line, index) => this.drawText(line, x + 32, y + index * lineHeight, 8.2, "regular", colors.slate));
-          y += lines.length * lineHeight + 5;
-        });
-        this.y = yTop + height + 14;
       },
       addUseSummaryCard() {
         const x = margin;

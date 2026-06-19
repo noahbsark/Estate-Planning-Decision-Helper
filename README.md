@@ -6,14 +6,13 @@ A polished, mobile-first static website that helps U.S. adults and families unde
 
 ## Project overview
 
-This site is a client-side decision-support experience for estate-planning education. It asks one question at a time, groups the quiz into clear stages, explains the logic in plain English, and generates a polished PDF summary users can bring to an attorney.
+This site is a client-side decision-support experience for estate-planning education. It asks one question at a time, explains the logic in plain English, and generates a print-friendly summary users can bring to an attorney.
 
 The site uses:
 
 - Plain HTML
 - Plain CSS
 - Vanilla JavaScript
-- Client-side PDF generation
 - No backend
 - No database
 - No tracking
@@ -144,11 +143,17 @@ Result explanations are defined in `outcomeContent` in `script.js`. Each outcome
 - Questions to ask an attorney
 - Next steps
 
-### CTA and package links
+### CTA links
 
-Package and consultation links are configured near the top of `script.js` in `PACKAGE_CONFIG`. Replace the placeholder `href` values with Stripe Payment Links, a scheduling link, or a proper intake flow after legal review.
+The consultation CTA is rendered in `renderResult()` in `script.js`.
 
-The result screen highlights the closest package based on the quiz result, but the language should remain careful: the quiz provides an educational starting point, not a legal conclusion.
+Search for:
+
+```js
+Book a consultation
+```
+
+Then update the `href` value to your preferred destination.
 
 ## Legal disclaimer reminder
 
@@ -163,12 +168,17 @@ Recommended language to preserve:
 - “Laws vary by state”
 - “Based on your answers, this may be a useful starting point”
 
+## Recent UX polish
+
+- Quiz questions were shortened and helper text now carries examples instead of overloading headings.
+- Answer choices use compact card-style buttons with hidden native radios for a cleaner interaction.
+- The quiz auto-scroll behavior was tightened to reduce small repeated scrolling under the sticky header.
+- The quiz layout is more compact on desktop and stacks cleanly on mobile.
+
 ## Suggested future improvements
 
 - Add state-specific educational pages reviewed by licensed counsel.
-- Connect Stripe Payment Links and a pre-purchase intake flow.
-- Add a state eligibility screen before package purchase.
-- Continue improving the client-side PDF summary design.
+- Add optional downloadable PDF styling for printed summaries.
 - Add a firm-branded consultation form link.
 - Add Spanish-language content.
 - Add more detailed educational content about powers of attorney, health care directives, beneficiary designations, and trust funding.
@@ -179,33 +189,8 @@ Recommended language to preserve:
 
 - Opens locally with `index.html`
 - Quiz works end-to-end
-- Back, next, restart, validation, and PDF download actions work
+- Back, next, restart, validation, and print actions work
 - All four result types are reachable through different answer paths
 - Responsive layout is designed for mobile, tablet, and desktop
 - No backend, database, tracking, or data storage
 - GitHub Pages deployment instructions are included
-
-## Payment package buttons
-
-The result screen includes optional package cards for an Attorney-Drafted Will Plan, Attorney-Drafted Trust Plan, and Attorney Consultation. Prices and checkout links are configured near the top of `script.js` in `PACKAGE_CONFIG`.
-
-Recommended placeholder prices:
-
-- Attorney-Drafted Will Plan: `$750`
-- Attorney-Drafted Trust Plan: `$2,500`
-- Attorney Consultation: `$250`
-
-To accept payment on GitHub Pages without a backend, create Stripe Payment Links for each product, then replace the placeholder `href` values in `PACKAGE_CONFIG` with the live `https://buy.stripe.com/...` URLs. Do not sell legal advice or attorney-drafted legal documents unless the service is actually performed or reviewed by a licensed attorney and your engagement process, conflicts checks, refund policy, terms, and state limitations are reviewed by counsel.
-
-
-## Recent UX upgrades
-
-This version includes:
-
-- A lower-friction quiz that starts immediately without an upfront state/acknowledgement gate.
-- Smart skipping for the multi-state real-estate question when the user says they do not own real estate.
-- Stage-aware quiz microcopy for Family, Assets, Goals, and Review.
-- Personalized result snapshots with planning priorities flagged.
-- Attorney prep checklist in both the result screen and generated PDF.
-- Optional attorney-drafted package cards with recommended next-step highlighting.
-- A dedicated services section for will, trust, and consultation offers.
