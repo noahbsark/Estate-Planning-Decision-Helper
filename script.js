@@ -30,15 +30,15 @@
   const questions = [
     {
       id: "minorChildren",
-      text: "Do you have minor children?",
-      hint: "A will is commonly used to nominate guardians. Trust planning can also help manage assets for children over time.",
+      text: "Minor children?",
+      hint: "A will can nominate guardians. A trust can help manage assets for children over time.",
       yes: { will: 3, both: 3 },
       no: { simple: 1 },
       unsure: { attorney: 1 }
     },
     {
       id: "realEstate",
-      text: "Do you own real estate?",
+      text: "Own real estate?",
       hint: "This includes a home, land, rental property, or other real estate that may need probate or trust planning.",
       yes: { trust: 3, both: 1 },
       no: { simple: 1 },
@@ -54,7 +54,7 @@
     },
     {
       id: "avoidProbate",
-      text: "Do you want to avoid probate?",
+      text: "Want to avoid probate?",
       hint: "Trusts can often reduce probate for funded assets, depending on state law and asset type.",
       yes: { trust: 4, both: 1 },
       no: { simple: 1, will: 1 },
@@ -70,7 +70,7 @@
     },
     {
       id: "blendedFamily",
-      text: "Do you have a blended family?",
+      text: "Blended family?",
       hint: "This can include children from a prior relationship or family dynamics that may need careful drafting.",
       yes: { attorney: 5, both: 1 },
       no: { simple: 1 },
@@ -86,8 +86,8 @@
     },
     {
       id: "business",
-      text: "Do you own a business?",
-      hint: "Business ownership may require succession planning, buy-sell agreements, tax review, and continuity planning.",
+      text: "Business owner?",
+      hint: "Business interests can raise succession, tax, ownership-transfer, or continuity issues.",
       yes: { attorney: 5, trust: 1 },
       no: { simple: 1 },
       unsure: { attorney: 2 }
@@ -118,8 +118,8 @@
     },
     {
       id: "existingDocuments",
-      text: "Already have estate documents?",
-      hint: "Existing documents may need review if your family, assets, fiduciaries, or state law have changed.",
+      text: "Have estate documents?",
+      hint: "Existing documents may need review if family, assets, fiduciaries, or state law have changed.",
       yes: { review: 1 },
       no: { will: 1, simple: 1 },
       unsure: { attorney: 1, review: 1 }

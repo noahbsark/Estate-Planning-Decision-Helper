@@ -2599,3 +2599,216 @@ body.result-open .consultation-cta .btn {
     }
   }
 }
+
+
+/* Desktop quiz alignment and services polish - 2026 upgrade */
+@media screen {
+  #quiz {
+    scroll-margin-top: 5.5rem;
+  }
+
+  .quiz-section.section-shell {
+    padding-block: clamp(2.25rem, 5vw, 4.75rem);
+  }
+
+  .quiz-layout {
+    isolation: isolate;
+  }
+
+  .quiz-context {
+    min-width: 0;
+  }
+
+  .quiz-context h2 {
+    overflow-wrap: normal;
+    text-wrap: balance;
+  }
+
+  .quiz-card {
+    z-index: 2;
+  }
+
+  .question-panel {
+    min-height: 0;
+  }
+
+  .question-title {
+    text-wrap: balance;
+  }
+
+  .question-hint {
+    text-wrap: pretty;
+  }
+}
+
+@media (min-width: 980px) {
+  .quiz-layout {
+    grid-template-columns: minmax(20rem, 29rem) minmax(0, 1fr);
+    gap: clamp(2.25rem, 4vw, 4.75rem);
+    align-items: start;
+  }
+
+  .quiz-context {
+    max-width: 29rem;
+    position: sticky;
+    top: 6.1rem;
+  }
+
+  .quiz-context h2 {
+    max-width: 8.4ch;
+    font-size: clamp(2.75rem, 3.4vw, 4.35rem);
+    line-height: 0.96;
+    letter-spacing: -0.055em;
+  }
+
+  .quiz-context p:not(.eyebrow) {
+    max-width: 28rem;
+    font-size: clamp(0.96rem, 1vw, 1.06rem);
+    line-height: 1.55;
+  }
+
+  .privacy-note {
+    max-width: 28rem;
+    padding: 1rem 1.15rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .quiz-card {
+    width: 100%;
+    max-width: none;
+    justify-self: stretch;
+    padding: clamp(1.45rem, 2.35vw, 2.15rem);
+    border-radius: 2.35rem;
+  }
+
+  .quiz-progress-wrap {
+    padding-bottom: clamp(0.9rem, 1.4vw, 1.15rem);
+  }
+
+  .question-title,
+  .question-title-compact,
+  .question-panel[data-question-id="significantAssets"] .question-title,
+  .question-panel[data-question-id="incapacity"] .question-title,
+  .question-panel[data-question-id="blendedFamily"] .question-title,
+  .question-panel[data-question-id="changedRecently"] .question-title {
+    max-width: 15ch;
+    font-size: clamp(2.35rem, 3.55vw, 4rem);
+    line-height: 0.98;
+  }
+
+  .question-panel[data-question-id="minorChildren"] .question-title,
+  .question-panel[data-question-id="realEstate"] .question-title,
+  .question-panel[data-question-id="business"] .question-title,
+  .question-panel[data-question-id="privacy"] .question-title {
+    max-width: 14ch;
+    font-size: clamp(2.55rem, 4.2vw, 4.55rem);
+  }
+
+  .question-hint {
+    max-width: 56rem;
+    margin-top: clamp(0.75rem, 1vw, 0.95rem);
+    font-size: clamp(0.96rem, 1vw, 1.05rem);
+    line-height: 1.48;
+  }
+
+  .answer-group {
+    margin-top: clamp(1rem, 1.4vw, 1.3rem);
+    gap: clamp(0.8rem, 1.25vw, 1.1rem);
+  }
+
+  .answer-option {
+    min-height: 3.05rem;
+    padding: 0.72rem 1rem;
+  }
+
+  .quiz-actions {
+    justify-content: center;
+    margin-top: clamp(1rem, 1.4vw, 1.25rem);
+  }
+
+  .quiz-actions .btn-primary {
+    min-width: 13rem;
+  }
+}
+
+@media (min-width: 980px) and (max-width: 1180px) {
+  .quiz-layout {
+    grid-template-columns: minmax(17rem, 23rem) minmax(0, 1fr);
+    gap: 2rem;
+  }
+
+  .quiz-context h2 {
+    font-size: clamp(2.35rem, 3.2vw, 3.6rem);
+  }
+
+  .question-title,
+  .question-title-compact {
+    font-size: clamp(2.15rem, 3.5vw, 3.35rem);
+  }
+}
+
+@media (min-width: 980px) and (max-height: 820px) {
+  .quiz-section.section-shell {
+    padding-block: 1.75rem 2.3rem;
+  }
+
+  .quiz-context h2 {
+    font-size: clamp(2.25rem, 3vw, 3.65rem);
+  }
+
+  .quiz-context p:not(.eyebrow),
+  .privacy-note {
+    font-size: 0.92rem;
+  }
+
+  .quiz-card {
+    padding: 1.25rem 1.65rem;
+    border-radius: 1.85rem;
+  }
+
+  .question-title,
+  .question-title-compact,
+  .question-panel[data-question-id="significantAssets"] .question-title,
+  .question-panel[data-question-id="incapacity"] .question-title,
+  .question-panel[data-question-id="blendedFamily"] .question-title,
+  .question-panel[data-question-id="changedRecently"] .question-title {
+    font-size: clamp(2rem, 3vw, 3.15rem);
+  }
+
+  .question-hint {
+    font-size: 0.94rem;
+  }
+
+  .answer-option {
+    min-height: 2.85rem;
+  }
+
+  .quiz-actions .btn {
+    min-height: 2.8rem;
+  }
+}
+
+@media (max-width: 979px) {
+  .quiz-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .quiz-context h2 {
+    max-width: none;
+  }
+
+  .quiz-card {
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 860px) {
+  .services-grid {
+    align-items: stretch;
+  }
+
+  .service-card {
+    min-height: 100%;
+  }
+}

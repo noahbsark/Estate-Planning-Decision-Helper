@@ -194,3 +194,11 @@ Recommended language to preserve:
 - Responsive layout is designed for mobile, tablet, and desktop
 - No backend, database, tracking, or data storage
 - GitHub Pages deployment instructions are included
+
+
+## Latest UX updates
+
+- The quiz uses shorter question headlines with detail moved into helper text.
+- Desktop quiz spacing has been tightened to reduce small scroll adjustments between questions.
+- Answer choices use large accessible card buttons with centered labels and a clear selected state.
+- Optional attorney-led service examples are included as placeholders and should be connected to a proper intake, conflict-check, engagement, and payment workflow before use.
