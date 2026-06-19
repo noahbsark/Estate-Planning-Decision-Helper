@@ -46,7 +46,7 @@
     },
     {
       id: "multiState",
-      text: "Real estate in more than one state?",
+      text: "Real estate in another state?",
       hint: "Property in multiple states can add probate and title-transfer complexity.",
       yes: { trust: 2, attorney: 5 },
       no: { simple: 1 },
@@ -54,7 +54,7 @@
     },
     {
       id: "avoidProbate",
-      text: "Want to avoid probate?",
+      text: "Avoid probate?",
       hint: "Trusts can often reduce probate for funded assets, depending on state law and asset type.",
       yes: { trust: 4, both: 1 },
       no: { simple: 1, will: 1 },
@@ -62,7 +62,7 @@
     },
     {
       id: "privacy",
-      text: "Is privacy a priority?",
+      text: "Privacy a priority?",
       hint: "Probate can become part of public court records. Trust administration is often more private.",
       yes: { trust: 3 },
       no: { simple: 1 },
@@ -94,7 +94,7 @@
     },
     {
       id: "significantAssets",
-      text: "Complex assets or tax concerns?",
+      text: "Complex assets or taxes?",
       hint: "Examples include investments, life insurance, business interests, larger estates, or tax-planning goals. No exact values needed.",
       yes: { trust: 3, attorney: 3 },
       no: { simple: 1 },
@@ -102,7 +102,7 @@
     },
     {
       id: "incapacity",
-      text: "Want incapacity planning?",
+      text: "Need incapacity planning?",
       hint: "This means naming trusted people and tools to help if you cannot act for yourself.",
       yes: { trust: 4, both: 1 },
       no: { simple: 1 },
@@ -110,7 +110,7 @@
     },
     {
       id: "simpleLowCost",
-      text: "Prefer a simpler starting point?",
+      text: "Prefer a simple plan?",
       hint: "A will-based plan can be a lower-complexity start, but may not address privacy, probate, or incapacity goals.",
       yes: { simple: 3, will: 3 },
       no: { trust: 1, both: 1 },
@@ -118,7 +118,7 @@
     },
     {
       id: "existingDocuments",
-      text: "Have estate documents?",
+      text: "Already have estate documents?",
       hint: "Existing documents may need review if family, assets, fiduciaries, or state law have changed.",
       yes: { review: 1 },
       no: { will: 1, simple: 1 },
@@ -126,7 +126,7 @@
     },
     {
       id: "changedRecently",
-      text: "Recent major life changes?",
+      text: "Recent life changes?",
       hint: "Examples include marriage, divorce, moving states, a new child, a death, or major asset changes.",
       yes: { attorney: 3, review: 2 },
       no: { simple: 1 },
@@ -474,8 +474,8 @@
       const comfortableBottom = window.innerHeight - 18;
 
       // Avoid tiny repeated scroll jumps between questions. Only move the page when
-      // the active card is actually clipped by the sticky header or viewport.
-      const isComfortablyVisible = cardRect.top >= comfortableTop && cardRect.bottom <= comfortableBottom;
+      // the active card is actually meaningfully clipped by the sticky header or viewport.
+      const isComfortablyVisible = cardRect.top >= comfortableTop - 8 && cardRect.bottom <= comfortableBottom + 8;
       if (isComfortablyVisible) return;
 
       const cardFitsViewport = cardRect.height <= comfortableBottom - comfortableTop;

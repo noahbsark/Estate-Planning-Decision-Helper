@@ -3020,3 +3020,256 @@ body.result-open .consultation-cta .btn {
     text-align: left;
   }
 }
+
+/* 2026-06-19 visual upgrade: tighter landing rhythm, cleaner quiz card, fewer scroll jumps. */
+@media screen {
+  .section-shell {
+    padding-block: clamp(3.25rem, 6vw, 5.5rem);
+  }
+
+  .hero.section-shell {
+    padding-top: clamp(4.5rem, 8vw, 7rem);
+    padding-bottom: clamp(3.75rem, 7vw, 6rem);
+  }
+
+  .intro.section-shell {
+    padding-top: clamp(3rem, 5vw, 4.75rem);
+    padding-bottom: clamp(3rem, 5vw, 4.75rem);
+  }
+
+  .comparison.section-shell,
+  .services.section-shell,
+  .faq.section-shell {
+    padding-block: clamp(3.75rem, 7vw, 6rem);
+  }
+
+  body:not(.result-open) .quiz-section.section-shell {
+    display: block;
+    min-height: auto;
+    padding-block: clamp(3.25rem, 6vw, 5.75rem);
+  }
+
+  body:not(.result-open) .quiz-section .container {
+    width: min(100% - 2rem, 1180px);
+  }
+
+  body:not(.result-open) .quiz-card {
+    min-height: auto;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 94% 8%, rgba(211, 179, 108, 0.08), transparent 16rem),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 250, 240, 0.76));
+    border-color: rgba(16, 42, 70, 0.1);
+    box-shadow: 0 28px 90px rgba(7, 22, 38, 0.12);
+  }
+
+  body:not(.result-open) .quiz-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 0.22rem;
+    background: linear-gradient(90deg, rgba(63, 112, 95, 0.86), rgba(211, 179, 108, 0.84));
+    opacity: 0.28;
+  }
+
+  body:not(.result-open) .question-panel {
+    display: grid;
+    gap: clamp(0.72rem, 1.4vw, 1.05rem);
+    min-height: 0;
+    align-content: start;
+  }
+
+  body:not(.result-open) .question-title,
+  body:not(.result-open) .question-title-compact {
+    max-width: 14.5ch;
+    margin-top: clamp(0.55rem, 1.1vw, 0.9rem);
+    letter-spacing: -0.05em;
+    text-wrap: balance;
+  }
+
+  body:not(.result-open) .question-hint {
+    max-width: 58rem;
+    margin-top: clamp(0.15rem, 0.5vw, 0.35rem);
+    color: var(--color-slate-700);
+    text-wrap: pretty;
+  }
+
+  body:not(.result-open) .answer-group {
+    margin-top: clamp(0.9rem, 1.6vw, 1.35rem);
+  }
+
+  body:not(.result-open) .answer-option {
+    min-height: 3.05rem;
+    border-color: rgba(16, 42, 70, 0.12);
+    background: rgba(255, 250, 240, 0.75);
+    box-shadow: 0 9px 24px rgba(7, 22, 38, 0.045);
+  }
+
+  body:not(.result-open) .answer-option:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.92);
+    border-color: rgba(185, 145, 72, 0.34);
+    box-shadow: 0 14px 34px rgba(7, 22, 38, 0.075);
+  }
+
+  body:not(.result-open) .answer-option:has(input:checked) {
+    background:
+      radial-gradient(circle at 82% 52%, rgba(63, 112, 95, 0.13), transparent 6.5rem),
+      linear-gradient(135deg, rgba(63, 112, 95, 0.08), rgba(255, 250, 240, 0.94));
+    border-color: rgba(63, 112, 95, 0.6);
+    box-shadow: 0 16px 40px rgba(63, 112, 95, 0.13);
+  }
+
+  body:not(.result-open) .quiz-actions {
+    margin-top: clamp(1.05rem, 1.8vw, 1.45rem);
+    margin-bottom: 0;
+  }
+
+  body:not(.result-open) #quiz-disclaimer.small-note {
+    margin-top: clamp(0.75rem, 1.25vw, 1rem);
+  }
+}
+
+@media screen and (min-width: 980px) {
+  body:not(.result-open) .quiz-layout {
+    grid-template-columns: minmax(18rem, 27rem) minmax(0, 56rem);
+    justify-content: space-between;
+    align-items: center;
+    gap: clamp(2.25rem, 4.25vw, 4.5rem);
+  }
+
+  body:not(.result-open) .quiz-context {
+    position: static;
+    max-width: 27rem;
+  }
+
+  body:not(.result-open) .quiz-context h2 {
+    max-width: 8.7ch;
+    font-size: clamp(2.7rem, 3.55vw, 4.3rem);
+    line-height: 0.96;
+    letter-spacing: -0.055em;
+  }
+
+  body:not(.result-open) .quiz-context p:not(.eyebrow) {
+    max-width: 27rem;
+    font-size: clamp(0.98rem, 1vw, 1.08rem);
+  }
+
+  body:not(.result-open) .privacy-note {
+    max-width: 27rem;
+  }
+
+  body:not(.result-open) .quiz-card {
+    width: 100%;
+    max-width: 56rem;
+    justify-self: end;
+    padding: clamp(1.65rem, 2.4vw, 2.25rem);
+    border-radius: 2.25rem;
+  }
+
+  body:not(.result-open) .question-title,
+  body:not(.result-open) .question-title-compact,
+  body:not(.result-open) .question-panel[data-question-id="significantAssets"] .question-title,
+  body:not(.result-open) .question-panel[data-question-id="incapacity"] .question-title,
+  body:not(.result-open) .question-panel[data-question-id="blendedFamily"] .question-title,
+  body:not(.result-open) .question-panel[data-question-id="changedRecently"] .question-title {
+    max-width: 14ch;
+    font-size: clamp(2.7rem, 3.55vw, 4.15rem);
+    line-height: 0.98;
+  }
+
+  body:not(.result-open) .question-panel[data-question-id="minorChildren"] .question-title,
+  body:not(.result-open) .question-panel[data-question-id="realEstate"] .question-title,
+  body:not(.result-open) .question-panel[data-question-id="business"] .question-title,
+  body:not(.result-open) .question-panel[data-question-id="avoidProbate"] .question-title,
+  body:not(.result-open) .question-panel[data-question-id="privacy"] .question-title {
+    max-width: 13ch;
+    font-size: clamp(3rem, 4vw, 4.75rem);
+  }
+
+  body:not(.result-open) .question-hint {
+    font-size: clamp(0.98rem, 1vw, 1.06rem);
+    line-height: 1.52;
+  }
+
+  body:not(.result-open) .answer-group {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(0.85rem, 1.3vw, 1.1rem);
+  }
+
+  body:not(.result-open) .answer-option {
+    min-height: 3.05rem;
+    border-radius: 1rem;
+  }
+
+  body:not(.result-open) .quiz-actions {
+    justify-content: center;
+    gap: clamp(0.8rem, 1.3vw, 1.1rem);
+  }
+
+  body:not(.result-open) .quiz-actions .btn {
+    min-height: 3rem;
+    padding-inline: 1.4rem;
+  }
+
+  body:not(.result-open) .quiz-actions .btn-primary {
+    min-width: 13rem;
+  }
+}
+
+@media screen and (min-width: 980px) and (max-height: 820px) {
+  body:not(.result-open) .quiz-section.section-shell {
+    padding-block: 1.5rem 2rem;
+  }
+
+  body:not(.result-open) .quiz-card {
+    padding: 1.25rem 1.6rem;
+    border-radius: 1.85rem;
+  }
+
+  body:not(.result-open) .quiz-context h2 {
+    font-size: clamp(2.35rem, 3vw, 3.65rem);
+  }
+
+  body:not(.result-open) .question-title,
+  body:not(.result-open) .question-title-compact,
+  body:not(.result-open) .question-panel[data-question-id="significantAssets"] .question-title,
+  body:not(.result-open) .question-panel[data-question-id="incapacity"] .question-title,
+  body:not(.result-open) .question-panel[data-question-id="blendedFamily"] .question-title,
+  body:not(.result-open) .question-panel[data-question-id="changedRecently"] .question-title {
+    font-size: clamp(2.25rem, 3vw, 3.45rem);
+  }
+
+  body:not(.result-open) .question-panel[data-question-id="minorChildren"] .question-title,
+  body:not(.result-open) .question-panel[data-question-id="realEstate"] .question-title,
+  body:not(.result-open) .question-panel[data-question-id="business"] .question-title,
+  body:not(.result-open) .question-panel[data-question-id="avoidProbate"] .question-title,
+  body:not(.result-open) .question-panel[data-question-id="privacy"] .question-title {
+    font-size: clamp(2.45rem, 3.25vw, 3.75rem);
+  }
+
+  body:not(.result-open) .answer-option,
+  body:not(.result-open) .quiz-actions .btn {
+    min-height: 2.8rem;
+  }
+}
+
+@media screen and (max-width: 759px) {
+  body:not(.result-open) .quiz-card {
+    padding: 1.15rem;
+  }
+
+  body:not(.result-open) .question-title,
+  body:not(.result-open) .question-title-compact {
+    max-width: none;
+    font-size: clamp(2.05rem, 10vw, 3.05rem);
+  }
+
+  body:not(.result-open) .answer-group {
+    grid-template-columns: 1fr;
+  }
+
+  body:not(.result-open) .quiz-actions {
+    align-items: stretch;
+  }
+}
