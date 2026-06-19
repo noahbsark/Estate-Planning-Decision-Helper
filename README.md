@@ -197,9 +197,8 @@ Recommended language to preserve:
 - No backend, database, tracking, or data storage
 - GitHub Pages deployment instructions are included
 
-## Recent upgrade notes
+## Latest upgrade notes
 
-- Added hero proof chips and a three-step explanation to make the landing page feel more trustworthy and easier to scan.
-- Tightened section spacing so the page has fewer long empty vertical stretches.
-- Refined quiz copy, button rhythm, selected-answer states, and keyboard shortcuts: `1`, `2`, `3` select an answer and `Enter` continues.
-- Preserved the no-backend, browser-only architecture.
+- Added cache-busted `styles.css` and `script.js` URLs so GitHub Pages updates show up more reliably.
+- Tightened the quiz section so the decision helper starts closer to the top instead of floating in a large blank band.
+- Polished the quiz card with a subtler premium border, clearer selected-answer styling, and better desktop sizing.
