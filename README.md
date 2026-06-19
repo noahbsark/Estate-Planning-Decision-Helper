@@ -172,7 +172,9 @@ Recommended language to preserve:
 
 - Quiz questions were shortened and helper text now carries examples instead of overloading headings.
 - Answer choices use compact card-style buttons with hidden native radios for a cleaner interaction.
-- The quiz auto-scroll behavior was tightened to reduce small repeated scrolling under the sticky header.
+- The quiz auto-scroll behavior now only moves the page when the active card is actually clipped, reducing small repeated scroll jumps.
+- The Next button stays disabled until an answer is selected, which makes the flow feel cleaner and prevents validation friction.
+- Desktop quiz spacing was refined so the sidebar, question card, answer row, and navigation buttons fit more comfortably in one viewport.
 - The quiz layout is more compact on desktop and stacks cleanly on mobile.
 
 ## Suggested future improvements
@@ -194,11 +196,3 @@ Recommended language to preserve:
 - Responsive layout is designed for mobile, tablet, and desktop
 - No backend, database, tracking, or data storage
 - GitHub Pages deployment instructions are included
-
-
-## Latest UX updates
-
-- The quiz uses shorter question headlines with detail moved into helper text.
-- Desktop quiz spacing has been tightened to reduce small scroll adjustments between questions.
-- Answer choices use large accessible card buttons with centered labels and a clear selected state.
-- Optional attorney-led service examples are included as placeholders and should be connected to a proper intake, conflict-check, engagement, and payment workflow before use.

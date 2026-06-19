@@ -347,6 +347,11 @@
 
         const error = document.querySelector("#quiz-error");
         if (error) error.textContent = "";
+
+        const nextButton = document.querySelector("[data-action='next']");
+        if (nextButton instanceof HTMLButtonElement) {
+          nextButton.disabled = false;
+        }
       }
     });
   }
@@ -423,7 +428,7 @@
           <button class="btn btn-secondary" type="button" data-action="back" ${state.currentIndex === 0 ? "disabled" : ""}>
             Back
           </button>
-          <button class="btn btn-primary" type="button" data-action="next">
+          <button class="btn btn-primary" type="button" data-action="next" ${selectedAnswer ? "" : "disabled"}>
             ${state.currentIndex === visibleQuestions.length - 1 ? "See my starting point" : "Next question"}
           </button>
           <button class="btn btn-text" type="button" data-action="restart">
@@ -464,7 +469,19 @@
 
       const header = document.querySelector(".site-header");
       const headerHeight = header instanceof HTMLElement ? header.getBoundingClientRect().height : 78;
-      const targetTop = window.scrollY + card.getBoundingClientRect().top - headerHeight - 14;
+      const cardRect = card.getBoundingClientRect();
+      const comfortableTop = headerHeight + 14;
+      const comfortableBottom = window.innerHeight - 18;
+
+      // Avoid tiny repeated scroll jumps between questions. Only move the page when
+      // the active card is actually clipped by the sticky header or viewport.
+      const isComfortablyVisible = cardRect.top >= comfortableTop && cardRect.bottom <= comfortableBottom;
+      if (isComfortablyVisible) return;
+
+      const cardFitsViewport = cardRect.height <= comfortableBottom - comfortableTop;
+      const targetTop = cardFitsViewport
+        ? window.scrollY + cardRect.top - comfortableTop
+        : window.scrollY + cardRect.top - headerHeight - 10;
 
       window.scrollTo({
         top: Math.max(0, targetTop),

@@ -2812,3 +2812,211 @@ body.result-open .consultation-cta .btn {
     min-height: 100%;
   }
 }
+
+/* 2026-06-19 guided-flow refinement: less micro-scrolling, cleaner quiz rhythm, better desktop fit. */
+@media screen {
+  body:not(.result-open) .quiz-section.section-shell {
+    display: flex;
+    min-height: calc(100svh - 4.75rem);
+    align-items: center;
+    padding-block: clamp(1.65rem, 4vw, 3.75rem);
+  }
+
+  body:not(.result-open) .quiz-section .container {
+    width: min(100% - 2rem, 1240px);
+  }
+
+  body:not(.result-open) .quiz-card {
+    background:
+      radial-gradient(circle at 92% 8%, rgba(211, 179, 108, 0.08), transparent 18rem),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(255, 250, 240, 0.72));
+    border-color: rgba(16, 42, 70, 0.105);
+  }
+
+  body:not(.result-open) .question-panel {
+    display: grid;
+    gap: clamp(0.7rem, 1.3vw, 1rem);
+  }
+
+  body:not(.result-open) .question-label {
+    color: var(--color-gold-500);
+    opacity: 0.96;
+  }
+
+  body:not(.result-open) .question-title {
+    margin-top: clamp(0.55rem, 1vw, 0.85rem);
+    text-wrap: balance;
+  }
+
+  body:not(.result-open) .question-hint {
+    color: var(--color-slate-700);
+    text-wrap: pretty;
+  }
+
+  body:not(.result-open) .answer-group {
+    margin-top: clamp(0.85rem, 1.5vw, 1.25rem);
+  }
+
+  body:not(.result-open) .answer-option {
+    min-height: 3rem;
+    background: rgba(255, 250, 240, 0.76);
+    box-shadow: 0 10px 26px rgba(7, 22, 38, 0.045);
+  }
+
+  body:not(.result-open) .answer-option:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 34px rgba(7, 22, 38, 0.075);
+  }
+
+  body:not(.result-open) .answer-option:has(input:checked) {
+    background:
+      radial-gradient(circle at 86% 50%, rgba(63, 112, 95, 0.13), transparent 7rem),
+      rgba(249, 250, 244, 0.9);
+    border-color: rgba(63, 112, 95, 0.58);
+    box-shadow: 0 14px 40px rgba(63, 112, 95, 0.13);
+  }
+
+  body:not(.result-open) .quiz-actions {
+    justify-content: center;
+    margin-top: clamp(1.15rem, 1.9vw, 1.55rem);
+    margin-bottom: 0;
+  }
+
+  body:not(.result-open) .quiz-actions .btn-primary:disabled {
+    color: rgba(255, 255, 255, 0.92);
+    background: linear-gradient(135deg, #9ba9b7, #7f8c99);
+    opacity: 0.78;
+  }
+
+  body:not(.result-open) #quiz-disclaimer.small-note {
+    margin-top: clamp(0.75rem, 1.3vw, 1rem);
+    text-align: center;
+  }
+}
+
+@media screen and (min-width: 980px) {
+  body:not(.result-open) .quiz-layout {
+    grid-template-columns: minmax(17rem, 27rem) minmax(0, 58rem);
+    justify-content: space-between;
+    align-items: center;
+    gap: clamp(2rem, 4vw, 4.5rem);
+  }
+
+  body:not(.result-open) .quiz-context {
+    position: sticky;
+    top: 6rem;
+    max-width: 27rem;
+  }
+
+  body:not(.result-open) .quiz-context h2 {
+    max-width: 8.5ch;
+    font-size: clamp(2.6rem, 3.75vw, 4.5rem);
+    line-height: 0.96;
+  }
+
+  body:not(.result-open) .quiz-context p:not(.eyebrow) {
+    max-width: 25rem;
+    font-size: clamp(0.95rem, 1vw, 1.04rem);
+  }
+
+  body:not(.result-open) .privacy-note {
+    max-width: 26rem;
+  }
+
+  body:not(.result-open) .quiz-card {
+    justify-self: end;
+    width: 100%;
+    min-height: clamp(29rem, 58svh, 35rem);
+    padding: clamp(1.55rem, 2.65vw, 2.35rem);
+  }
+
+  body:not(.result-open) .quiz-content {
+    display: grid;
+    min-height: 0;
+  }
+
+  body:not(.result-open) .question-panel {
+    align-content: center;
+  }
+
+  body:not(.result-open) .question-title,
+  body:not(.result-open) .question-title-compact,
+  body:not(.result-open) .question-panel[data-question-id="significantAssets"] .question-title,
+  body:not(.result-open) .question-panel[data-question-id="incapacity"] .question-title,
+  body:not(.result-open) .question-panel[data-question-id="blendedFamily"] .question-title,
+  body:not(.result-open) .question-panel[data-question-id="changedRecently"] .question-title {
+    max-width: 16ch;
+    font-size: clamp(2.55rem, 3.45vw, 4.15rem);
+    line-height: 0.99;
+  }
+
+  body:not(.result-open) .question-panel[data-question-id="minorChildren"] .question-title,
+  body:not(.result-open) .question-panel[data-question-id="realEstate"] .question-title,
+  body:not(.result-open) .question-panel[data-question-id="business"] .question-title {
+    max-width: 13ch;
+    font-size: clamp(2.8rem, 4vw, 4.85rem);
+  }
+
+  body:not(.result-open) .answer-group {
+    max-width: 100%;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  body:not(.result-open) .answer-option {
+    min-height: 3.15rem;
+    border-radius: 1.05rem;
+  }
+
+  body:not(.result-open) .quiz-actions .btn {
+    min-height: 3.15rem;
+    padding-inline: 1.45rem;
+  }
+
+  body:not(.result-open) .quiz-actions .btn-primary {
+    min-width: 13.5rem;
+  }
+}
+
+@media screen and (min-width: 980px) and (max-height: 820px) {
+  body:not(.result-open) .quiz-section.section-shell {
+    min-height: calc(100svh - 4.4rem);
+    padding-block: 1.25rem 1.75rem;
+  }
+
+  body:not(.result-open) .quiz-card {
+    min-height: 27rem;
+    padding: 1.3rem 1.65rem;
+  }
+
+  body:not(.result-open) .question-title,
+  body:not(.result-open) .question-title-compact,
+  body:not(.result-open) .question-panel[data-question-id="significantAssets"] .question-title,
+  body:not(.result-open) .question-panel[data-question-id="incapacity"] .question-title,
+  body:not(.result-open) .question-panel[data-question-id="blendedFamily"] .question-title,
+  body:not(.result-open) .question-panel[data-question-id="changedRecently"] .question-title {
+    font-size: clamp(2.2rem, 3vw, 3.45rem);
+  }
+
+  body:not(.result-open) .question-hint {
+    font-size: 0.94rem;
+  }
+
+  body:not(.result-open) .answer-option,
+  body:not(.result-open) .quiz-actions .btn {
+    min-height: 2.85rem;
+  }
+}
+
+@media screen and (max-width: 759px) {
+  body:not(.result-open) .quiz-section.section-shell {
+    min-height: auto;
+  }
+
+  body:not(.result-open) .quiz-actions {
+    align-items: stretch;
+  }
+
+  body:not(.result-open) #quiz-disclaimer.small-note {
+    text-align: left;
+  }
+}
