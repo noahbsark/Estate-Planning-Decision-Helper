@@ -38,32 +38,32 @@
     },
     {
       id: "realEstate",
-      text: "Do you own a home or other real estate?",
-      hint: "Real estate is one of the most common reasons people explore trust-based planning or probate-avoidance strategies.",
+      text: "Do you own real estate?",
+      hint: "This includes a home, land, rental property, or other real estate that may need probate or trust planning.",
       yes: { trust: 3, both: 1 },
       no: { simple: 1 },
       unsure: { trust: 1, attorney: 1 }
     },
     {
       id: "multiState",
-      text: "Do you own real estate in multiple states?",
-      hint: "Multi-state real estate can add complexity because probate and property rules may differ by state.",
+      text: "Real estate in more than one state?",
+      hint: "Property in multiple states can add probate and title-transfer complexity.",
       yes: { trust: 2, attorney: 5 },
       no: { simple: 1 },
       unsure: { attorney: 2 }
     },
     {
       id: "avoidProbate",
-      text: "Is avoiding probate important to you?",
-      hint: "A properly funded trust can often reduce or avoid probate for assets held in the trust, depending on state law and asset type.",
+      text: "Do you want to avoid probate?",
+      hint: "Trusts can often reduce probate for funded assets, depending on state law and asset type.",
       yes: { trust: 4, both: 1 },
       no: { simple: 1, will: 1 },
       unsure: { trust: 1, attorney: 1 }
     },
     {
       id: "privacy",
-      text: "Is privacy important to you?",
-      hint: "Probate filings can become part of public court records. Trust administration is often more private.",
+      text: "Is privacy a priority?",
+      hint: "Probate can become part of public court records. Trust administration is often more private.",
       yes: { trust: 3 },
       no: { simple: 1 },
       unsure: { trust: 1 }
@@ -78,8 +78,8 @@
     },
     {
       id: "specialNeeds",
-      text: "Do you have a beneficiary with special needs?",
-      hint: "Special-needs planning can affect benefit eligibility and should generally be handled with personalized legal guidance.",
+      text: "Special-needs beneficiary?",
+      hint: "Special-needs planning can affect benefit eligibility and usually needs personalized legal guidance.",
       yes: { attorney: 6 },
       no: { simple: 1 },
       unsure: { attorney: 2 }
@@ -94,40 +94,40 @@
     },
     {
       id: "significantAssets",
-      text: "Do you have complex assets or tax concerns?",
-      hint: "This can include investments, life insurance, business interests, larger estates, or tax-planning goals. No exact values needed.",
+      text: "Complex assets or tax concerns?",
+      hint: "Examples include investments, life insurance, business interests, larger estates, or tax-planning goals. No exact values needed.",
       yes: { trust: 3, attorney: 3 },
       no: { simple: 1 },
       unsure: { attorney: 2 }
     },
     {
       id: "incapacity",
-      text: "Do you want incapacity planning?",
-      hint: "This means planning for someone you trust to manage assets or decisions if you cannot act for yourself.",
+      text: "Want incapacity planning?",
+      hint: "This means naming trusted people and tools to help if you cannot act for yourself.",
       yes: { trust: 4, both: 1 },
       no: { simple: 1 },
       unsure: { trust: 1, attorney: 1 }
     },
     {
       id: "simpleLowCost",
-      text: "Are you looking for a simple starting point?",
-      hint: "A simpler will-based plan may be enough for some people, but it may not address privacy, probate, or incapacity goals.",
+      text: "Prefer a simpler starting point?",
+      hint: "A will-based plan can be a lower-complexity start, but may not address privacy, probate, or incapacity goals.",
       yes: { simple: 3, will: 3 },
       no: { trust: 1, both: 1 },
       unsure: { attorney: 1 }
     },
     {
       id: "existingDocuments",
-      text: "Do you already have estate-planning documents?",
-      hint: "Existing documents may still need review if your family, assets, fiduciaries, or state law have changed.",
+      text: "Already have estate documents?",
+      hint: "Existing documents may need review if your family, assets, fiduciaries, or state law have changed.",
       yes: { review: 1 },
       no: { will: 1, simple: 1 },
       unsure: { attorney: 1, review: 1 }
     },
     {
       id: "changedRecently",
-      text: "Have your circumstances changed recently?",
-      hint: "Examples include marriage, divorce, a move, a new child, a death, or major asset changes.",
+      text: "Recent major life changes?",
+      hint: "Examples include marriage, divorce, moving states, a new child, a death, or major asset changes.",
       yes: { attorney: 3, review: 2 },
       no: { simple: 1 },
       unsure: { attorney: 2, review: 1 }
@@ -393,7 +393,7 @@
     quizContent.innerHTML = `
       <form class="question-panel" data-question-id="${escapeHtml(question.id)}" novalidate tabindex="-1">
         <span class="question-label">Question ${questionNumber}</span>
-        <h3 class="question-title" id="active-question">${escapeHtml(question.text)}</h3>
+        <h3 class="question-title ${question.text.length > 42 ? "question-title-compact" : ""}" id="active-question">${escapeHtml(question.text)}</h3>
         <p class="question-hint">${escapeHtml(question.hint)}</p>
 
         <fieldset class="answer-group" aria-labelledby="active-question">
@@ -464,7 +464,7 @@
 
       const header = document.querySelector(".site-header");
       const headerHeight = header instanceof HTMLElement ? header.getBoundingClientRect().height : 78;
-      const targetTop = window.scrollY + card.getBoundingClientRect().top - headerHeight - 24;
+      const targetTop = window.scrollY + card.getBoundingClientRect().top - headerHeight - 14;
 
       window.scrollTo({
         top: Math.max(0, targetTop),
