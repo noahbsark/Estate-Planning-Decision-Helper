@@ -31,7 +31,7 @@
     {
       id: "minorChildren",
       text: "Minor children?",
-      hint: "A will can nominate guardians. A trust can help manage assets for children over time.",
+      hint: "A will can nominate guardians. A trust can manage assets for children over time.",
       yes: { will: 3, both: 3 },
       no: { simple: 1 },
       unsure: { attorney: 1 }
@@ -39,14 +39,14 @@
     {
       id: "realEstate",
       text: "Own real estate?",
-      hint: "This includes a home, land, rental property, or other real estate that may need probate or trust planning.",
+      hint: "Includes a home, land, rentals, or other property that may need probate or trust planning.",
       yes: { trust: 3, both: 1 },
       no: { simple: 1 },
       unsure: { trust: 1, attorney: 1 }
     },
     {
       id: "multiState",
-      text: "Real estate in another state?",
+      text: "Own property in another state?",
       hint: "Property in multiple states can add probate and title-transfer complexity.",
       yes: { trust: 2, attorney: 5 },
       no: { simple: 1 },
@@ -55,14 +55,14 @@
     {
       id: "avoidProbate",
       text: "Avoid probate?",
-      hint: "Trusts can often reduce probate for funded assets, depending on state law and asset type.",
+      hint: "Trusts can often reduce probate for properly funded assets, depending on state law.",
       yes: { trust: 4, both: 1 },
       no: { simple: 1, will: 1 },
       unsure: { trust: 1, attorney: 1 }
     },
     {
       id: "privacy",
-      text: "Privacy a priority?",
+      text: "Is privacy a priority?",
       hint: "Probate can become part of public court records. Trust administration is often more private.",
       yes: { trust: 3 },
       no: { simple: 1 },
@@ -71,7 +71,7 @@
     {
       id: "blendedFamily",
       text: "Blended family?",
-      hint: "This can include children from a prior relationship or family dynamics that may need careful drafting.",
+      hint: "Includes children from prior relationships or family dynamics that may need careful drafting.",
       yes: { attorney: 5, both: 1 },
       no: { simple: 1 },
       unsure: { attorney: 2 }
@@ -79,7 +79,7 @@
     {
       id: "specialNeeds",
       text: "Special-needs beneficiary?",
-      hint: "Special-needs planning can affect benefit eligibility and usually needs personalized legal guidance.",
+      hint: "Special-needs planning can affect benefit eligibility and usually needs attorney guidance.",
       yes: { attorney: 6 },
       no: { simple: 1 },
       unsure: { attorney: 2 }
@@ -87,7 +87,7 @@
     {
       id: "business",
       text: "Business owner?",
-      hint: "Business interests can raise succession, tax, ownership-transfer, or continuity issues.",
+      hint: "Business interests can raise succession, tax, transfer, or continuity issues.",
       yes: { attorney: 5, trust: 1 },
       no: { simple: 1 },
       unsure: { attorney: 2 }
@@ -95,15 +95,15 @@
     {
       id: "significantAssets",
       text: "Complex assets or taxes?",
-      hint: "Examples include investments, life insurance, business interests, larger estates, or tax-planning goals. No exact values needed.",
+      hint: "Examples include investments, insurance, business interests, larger estates, or tax goals. No exact values needed.",
       yes: { trust: 3, attorney: 3 },
       no: { simple: 1 },
       unsure: { attorney: 2 }
     },
     {
       id: "incapacity",
-      text: "Need incapacity planning?",
-      hint: "This means naming trusted people and tools to help if you cannot act for yourself.",
+      text: "Plan for incapacity?",
+      hint: "Names trusted people and tools to help if you cannot act for yourself.",
       yes: { trust: 4, both: 1 },
       no: { simple: 1 },
       unsure: { trust: 1, attorney: 1 }
@@ -119,7 +119,7 @@
     {
       id: "existingDocuments",
       text: "Already have estate documents?",
-      hint: "Existing documents may need review if family, assets, fiduciaries, or state law have changed.",
+      hint: "Existing documents may need review if family, assets, fiduciaries, or state law changed.",
       yes: { review: 1 },
       no: { will: 1, simple: 1 },
       unsure: { attorney: 1, review: 1 }
@@ -127,7 +127,7 @@
     {
       id: "changedRecently",
       text: "Recent life changes?",
-      hint: "Examples include marriage, divorce, moving states, a new child, a death, or major asset changes.",
+      hint: "Examples include marriage, divorce, moving states, a new child, death, or major asset changes.",
       yes: { attorney: 3, review: 2 },
       no: { simple: 1 },
       unsure: { attorney: 2, review: 1 }
@@ -351,6 +351,32 @@
         const nextButton = document.querySelector("[data-action='next']");
         if (nextButton instanceof HTMLButtonElement) {
           nextButton.disabled = false;
+        }
+
+        statusRegion.textContent = `${target.closest(".answer-option")?.textContent?.trim() || "Answer"} selected. Continue when ready.`;
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (document.body.classList.contains("result-open")) return;
+      const target = event.target;
+      if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement) return;
+
+      const answerIndex = { "1": 0, "2": 1, "3": 2 }[event.key];
+      if (answerIndex !== undefined) {
+        const option = document.querySelectorAll("input[name='quiz-answer']")[answerIndex];
+        if (option instanceof HTMLInputElement) {
+          option.checked = true;
+          option.dispatchEvent(new Event("change", { bubbles: true }));
+          event.preventDefault();
+        }
+      }
+
+      if (event.key === "Enter") {
+        const nextButton = document.querySelector("[data-action='next']");
+        if (nextButton instanceof HTMLButtonElement && !nextButton.disabled) {
+          nextButton.click();
+          event.preventDefault();
         }
       }
     });

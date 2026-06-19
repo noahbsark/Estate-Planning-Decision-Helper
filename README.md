@@ -196,3 +196,10 @@ Recommended language to preserve:
 - Responsive layout is designed for mobile, tablet, and desktop
 - No backend, database, tracking, or data storage
 - GitHub Pages deployment instructions are included
+
+## Recent upgrade notes
+
+- Added hero proof chips and a three-step explanation to make the landing page feel more trustworthy and easier to scan.
+- Tightened section spacing so the page has fewer long empty vertical stretches.
+- Refined quiz copy, button rhythm, selected-answer states, and keyboard shortcuts: `1`, `2`, `3` select an answer and `Enter` continues.
+- Preserved the no-backend, browser-only architecture.
